@@ -19,7 +19,7 @@
 
         .container { max-width: 1200px; margin: 0 auto; }
 
-        /* ── Header ──────────────────────────────────────── */
+        /* ══════════════════ HEADER ══════════════════ */
         .header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
             padding: 2.5rem 3rem;
@@ -46,35 +46,60 @@
             position: relative; text-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
         .header p {
-            color: rgba(255,255,255,0.88); font-size: 1.1rem;
+            color: rgba(255,255,255,0.88); font-size: 1.05rem;
             margin-top: 0.5rem; position: relative; font-weight: 300;
         }
 
-        /* ── Status bar ──────────────────────────────────── */
-        .status-bar {
-            display: flex; gap: 1.2rem; margin-bottom: 2rem; flex-wrap: wrap;
+        /* ══════════════════ TABS ══════════════════ */
+        .tab-nav {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            background: rgba(255,255,255,0.04);
+            border-radius: 16px;
+            padding: 0.4rem;
+            border: 1px solid rgba(255,255,255,0.06);
         }
-        .chip {
-            background: rgba(255,255,255,0.06);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 50px;
-            padding: 0.5rem 1.2rem;
-            font-size: 0.82rem; color: #bbb;
-            display: flex; align-items: center; gap: 0.5rem;
+        .tab-btn {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: none;
+            background: transparent;
+            color: #888;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
         }
-        .dot {
-            width: 8px; height: 8px; border-radius: 50%;
-            display: inline-block; animation: pulse 2s infinite;
+        .tab-btn:hover {
+            color: #bbb;
+            background: rgba(255,255,255,0.04);
         }
-        .dot-green { background: #00e676; box-shadow: 0 0 8px #00e676; }
-        .dot-blue  { background: #448aff; box-shadow: 0 0 8px #448aff; }
-        @keyframes pulse {
-            0%,100% { opacity:1; transform:scale(1); }
-            50% { opacity:0.5; transform:scale(0.8); }
+        .tab-btn.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
         }
 
-        /* ── Cards ────────────────────────────────────────── */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ══════════════════ TAB 1: IMAGE CARDS ══════════════════ */
         .cards { display: flex; flex-direction: column; gap: 2rem; }
 
         .card {
@@ -93,9 +118,7 @@
         }
         .card.reverse { flex-direction: row-reverse; }
 
-        .card-image {
-            flex: 0 0 50%; max-width: 50%; overflow: hidden;
-        }
+        .card-image { flex: 0 0 50%; max-width: 50%; overflow: hidden; }
         .card-image img {
             width: 100%; height: 100%; object-fit: cover;
             display: block; transition: transform 0.5s ease;
@@ -111,30 +134,200 @@
             text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.6rem;
         }
         .card-body h2 {
-            font-size: 1.6rem; font-weight: 700; color: #fff;
-            margin-bottom: 1rem; line-height: 1.3;
+            font-size: 1.5rem; font-weight: 700; color: #fff;
+            margin-bottom: 0.8rem; line-height: 1.3;
         }
         .divider {
             width: 50px; height: 3px;
             background: linear-gradient(90deg, #667eea, #764ba2);
-            border-radius: 3px; margin: 1rem 0;
+            border-radius: 3px; margin: 0.8rem 0;
         }
-        .comment {
-            font-size: 1rem; line-height: 1.7; color: #aaa; font-weight: 300;
+        .comment { font-size: 0.95rem; line-height: 1.7; color: #aaa; font-weight: 300; }
+
+        /* ══════════════════ TAB 2: STATISTICS ══════════════════ */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .stat-card {
+            background: rgba(255,255,255,0.04);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 4px;
+            border-radius: 20px 20px 0 0;
+        }
+        .stat-card:nth-child(1)::before { background: linear-gradient(90deg, #667eea, #764ba2); }
+        .stat-card:nth-child(2)::before { background: linear-gradient(90deg, #00e676, #00bcd4); }
+        .stat-card:nth-child(3)::before { background: linear-gradient(90deg, #ff9800, #f44336); }
+        .stat-card:nth-child(4)::before { background: linear-gradient(90deg, #e040fb, #7c4dff); }
+        .stat-card:nth-child(5)::before { background: linear-gradient(90deg, #448aff, #536dfe); }
+        .stat-card:nth-child(6)::before { background: linear-gradient(90deg, #ffab00, #ff6d00); }
+
+        .stat-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 48px rgba(0,0,0,0.25);
+        }
+        .stat-icon { font-size: 2.2rem; margin-bottom: 0.8rem; }
+        .stat-value {
+            font-size: 2.6rem; font-weight: 800;
+            background: linear-gradient(135deg, #667eea, #f093fb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.3rem;
+        }
+        .stat-label { font-size: 0.85rem; color: #888; font-weight: 500; }
+        .stat-change {
+            font-size: 0.78rem; margin-top: 0.6rem; font-weight: 600;
+        }
+        .stat-up   { color: #00e676; }
+        .stat-down { color: #ff1744; }
+
+        /* ── Chart placeholder ── */
+        .chart-section {
+            background: rgba(255,255,255,0.04);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+        .chart-section h3 {
+            color: #fff; font-weight: 700; margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+        .bar-chart { display: flex; align-items: flex-end; gap: 1rem; height: 200px; padding-top: 1rem; }
+        .bar-group { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
+        .bar {
+            width: 100%;
+            border-radius: 8px 8px 0 0;
+            transition: height 1s ease;
+            position: relative;
+            min-width: 40px;
+        }
+        .bar-label { font-size: 0.75rem; color: #888; }
+        .bar-value {
+            font-size: 0.7rem; color: #fff; font-weight: 600;
+            position: absolute; top: -20px; width: 100%; text-align: center;
         }
 
-        /* ── Footer ──────────────────────────────────────── */
+        /* ── Table ── */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 2rem;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+        .data-table th, .data-table td {
+            padding: 1rem 1.2rem;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+        .data-table th {
+            background: rgba(102, 126, 234, 0.2);
+            color: #fff; font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.75rem;
+        }
+        .data-table tr { border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .data-table tr:hover { background: rgba(102,126,234,0.08); }
+        .badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .badge-green { background: rgba(0,230,118,0.15); color: #00e676; }
+        .badge-yellow { background: rgba(255,171,0,0.15); color: #ffab00; }
+        .badge-red   { background: rgba(255,23,68,0.15); color: #ff1744; }
+        .badge-blue  { background: rgba(68,138,255,0.15); color: #448aff; }
+
+        /* ══════════════════ TAB 3: INSIGHTS ══════════════════ */
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 1.5rem;
+        }
+        .insight-card {
+            background: rgba(255,255,255,0.04);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .insight-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 48px rgba(0,0,0,0.2);
+        }
+        .insight-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.2rem;
+        }
+        .insight-icon {
+            width: 48px; height: 48px;
+            border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.4rem;
+        }
+        .icon-purple { background: rgba(102,126,234,0.2); }
+        .icon-green  { background: rgba(0,230,118,0.15); }
+        .icon-orange { background: rgba(255,152,0,0.15); }
+        .icon-pink   { background: rgba(224,64,251,0.15); }
+        .icon-blue   { background: rgba(68,138,255,0.15); }
+        .icon-red    { background: rgba(255,23,68,0.15); }
+
+        .insight-title {
+            font-size: 1.1rem; font-weight: 700; color: #fff;
+        }
+        .insight-subtitle {
+            font-size: 0.78rem; color: #888; margin-top: 0.15rem;
+        }
+        .insight-text {
+            font-size: 0.92rem; line-height: 1.7; color: #aaa; font-weight: 300;
+        }
+        .insight-tags {
+            display: flex; gap: 0.5rem; margin-top: 1.2rem; flex-wrap: wrap;
+        }
+        .tag {
+            padding: 0.25rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            background: rgba(102,126,234,0.15);
+            color: #667eea;
+        }
+
+        /* ══════════════════ FOOTER ══════════════════ */
         .footer {
             text-align: center; padding: 3rem 0 1rem;
             color: #555; font-size: 0.8rem;
         }
         .footer a { color: #667eea; text-decoration: none; }
 
-        /* ── Responsive ──────────────────────────────────── */
+        /* ══════════════════ RESPONSIVE ══════════════════ */
         @media (max-width: 768px) {
             .card, .card.reverse { flex-direction: column; }
-            .card-image { flex: none; max-width: 100%; height: 250px; }
+            .card-image { flex: none; max-width: 100%; height: 220px; }
             body { padding: 1rem; }
+            .tab-btn { font-size: 0.8rem; padding: 0.8rem 0.5rem; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
 </head>
@@ -144,88 +337,368 @@
         <!-- ═══════════════ HEADER ═══════════════ -->
         <div class="header">
             <h1>📊 My Dashboard</h1>
-            <p>Images &amp; comments powered by GitHub — displayed on Streamlit</p>
+            <p>Images, Statistics &amp; Insights — powered by GitHub, displayed on Streamlit</p>
         </div>
 
-        <!-- ═══════════════ STATUS BAR ═══════════════ -->
-        <div class="status-bar">
-            <div class="chip"><span class="dot dot-green"></span> Live from GitHub</div>
-            <div class="chip"><span class="dot dot-blue"></span> 3 items</div>
-            <div class="chip">🔗 uecdashboard/my-dashboard</div>
+        <!-- ═══════════════ TAB NAVIGATION ═══════════════ -->
+        <div class="tab-nav">
+            <button class="tab-btn active" onclick="switchTab('images')">🖼️ Images</button>
+            <button class="tab-btn" onclick="switchTab('statistics')">📈 Statistics</button>
+            <button class="tab-btn" onclick="switchTab('insights')">💡 Insights</button>
         </div>
 
-        <!-- ═══════════════ CARDS ═══════════════ -->
-        <!--
-            HOW TO EDIT:
-            ============
-            1. Change the <img src="..."> to your image URL
-               (use: https://raw.githubusercontent.com/uecdashboard/my-dashboard/main/images/YOUR_IMAGE.png)
-            2. Change the <h2> title and <p class="comment"> text
-            3. To add a NEW card, copy one of the <div class="card"> blocks and paste below
-            4. Commit on GitHub — Streamlit dashboard updates automatically!
-        -->
 
-        <div class="cards">
+        <!-- ╔══════════════════════════════════════════════╗ -->
+        <!-- ║         TAB 1 — IMAGES & COMMENTS            ║ -->
+        <!-- ╚══════════════════════════════════════════════╝ -->
+        <div id="tab-images" class="tab-content active">
 
-            <!-- ──── Card 1 ──── -->
-            <div class="card">
-                <div class="card-image">
-                    <img src="https://raw.githubusercontent.com/uecdashboard/my-dashboard/main/images/sample1.png"
-                         alt="Project Overview" />
+            <div class="cards">
+
+                <!-- Card 1 -->
+                <div class="card">
+                    <div class="card-image">
+                        <img src="https://raw.githubusercontent.com/uecdashboard/my-dashboard/main/images/sample1.png"
+                             alt="Project Overview" />
+                    </div>
+                    <div class="card-body">
+                        <div class="card-number">Image 01</div>
+                        <h2>Project Overview</h2>
+                        <div class="divider"></div>
+                        <p class="comment">
+                            This is the main project overview showing key metrics and
+                            performance indicators for Q2 2026.
+                        </p>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <div class="card-number">Item 01</div>
-                    <h2>Project Overview</h2>
-                    <div class="divider"></div>
-                    <p class="comment">
-                        This is the main project overview showing key metrics and
-                        performance indicators for Q2 2026.
-                    </p>
+
+                <!-- Card 2 (reversed) -->
+                <div class="card reverse">
+                    <div class="card-image">
+                        <img src="https://raw.githubusercontent.com/uecdashboard/my-dashboard/main/images/sample2.png"
+                             alt="Analytics Report" />
+                    </div>
+                    <div class="card-body">
+                        <div class="card-number">Image 02</div>
+                        <h2>Analytics Report</h2>
+                        <div class="divider"></div>
+                        <p class="comment">
+                            Monthly analytics showing user engagement trends, page views,
+                            and conversion rates across all channels.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="card">
+                    <div class="card-image">
+                        <img src="https://raw.githubusercontent.com/uecdashboard/my-dashboard/main/images/sample3.png"
+                             alt="Team Progress" />
+                    </div>
+                    <div class="card-body">
+                        <div class="card-number">Image 03</div>
+                        <h2>Team Progress</h2>
+                        <div class="divider"></div>
+                        <p class="comment">
+                            Current sprint progress with task completion rates, blockers,
+                            and team velocity over the last 3 weeks.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- ╔══════════════════════════════════════════════╗ -->
+        <!-- ║         TAB 2 — STATISTICS                    ║ -->
+        <!-- ╚══════════════════════════════════════════════╝ -->
+        <div id="tab-statistics" class="tab-content">
+
+            <!-- KPI Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-value">1,284</div>
+                    <div class="stat-label">Total Users</div>
+                    <div class="stat-change stat-up">▲ 12.5% vs last month</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-value">$42.5K</div>
+                    <div class="stat-label">Revenue</div>
+                    <div class="stat-change stat-up">▲ 8.3% vs last month</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-value">96.2%</div>
+                    <div class="stat-label">Uptime</div>
+                    <div class="stat-change stat-up">▲ 1.1% vs last month</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">⚡</div>
+                    <div class="stat-value">3.2s</div>
+                    <div class="stat-label">Avg Response Time</div>
+                    <div class="stat-change stat-down">▼ 0.4s improved</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🎯</div>
+                    <div class="stat-value">89%</div>
+                    <div class="stat-label">Goal Completion</div>
+                    <div class="stat-change stat-up">▲ 5% vs target</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🌍</div>
+                    <div class="stat-value">24</div>
+                    <div class="stat-label">Active Countries</div>
+                    <div class="stat-change stat-up">▲ 3 new this quarter</div>
                 </div>
             </div>
 
-            <!-- ──── Card 2 (reversed layout) ──── -->
-            <div class="card reverse">
-                <div class="card-image">
-                    <img src="https://raw.githubusercontent.com/uecdashboard/my-dashboard/main/images/sample2.png"
-                         alt="Analytics Report" />
-                </div>
-                <div class="card-body">
-                    <div class="card-number">Item 02</div>
-                    <h2>Analytics Report</h2>
-                    <div class="divider"></div>
-                    <p class="comment">
-                        Monthly analytics showing user engagement trends, page views,
-                        and conversion rates across all channels.
-                    </p>
+            <!-- Bar Chart -->
+            <div class="chart-section">
+                <h3>📊 Monthly Revenue (2026)</h3>
+                <div class="bar-chart">
+                    <div class="bar-group">
+                        <div class="bar" style="height:60%; background: linear-gradient(to top, #667eea, #764ba2);">
+                            <div class="bar-value">$28K</div>
+                        </div>
+                        <div class="bar-label">Jan</div>
+                    </div>
+                    <div class="bar-group">
+                        <div class="bar" style="height:72%; background: linear-gradient(to top, #667eea, #764ba2);">
+                            <div class="bar-value">$33K</div>
+                        </div>
+                        <div class="bar-label">Feb</div>
+                    </div>
+                    <div class="bar-group">
+                        <div class="bar" style="height:55%; background: linear-gradient(to top, #667eea, #764ba2);">
+                            <div class="bar-value">$25K</div>
+                        </div>
+                        <div class="bar-label">Mar</div>
+                    </div>
+                    <div class="bar-group">
+                        <div class="bar" style="height:90%; background: linear-gradient(to top, #667eea, #f093fb);">
+                            <div class="bar-value">$42K</div>
+                        </div>
+                        <div class="bar-label">Apr</div>
+                    </div>
                 </div>
             </div>
 
-            <!-- ──── Card 3 ──── -->
-            <div class="card">
-                <div class="card-image">
-                    <img src="https://raw.githubusercontent.com/uecdashboard/my-dashboard/main/images/sample3.png"
-                         alt="Team Progress" />
-                </div>
-                <div class="card-body">
-                    <div class="card-number">Item 03</div>
-                    <h2>Team Progress</h2>
-                    <div class="divider"></div>
-                    <p class="comment">
-                        Current sprint progress with task completion rates, blockers,
-                        and team velocity over the last 3 weeks.
-                    </p>
-                </div>
+            <!-- Data Table -->
+            <div class="chart-section" style="margin-top: 1.5rem;">
+                <h3>📋 Project Status</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Project</th>
+                            <th>Status</th>
+                            <th>Progress</th>
+                            <th>Deadline</th>
+                            <th>Team</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Website Redesign</td>
+                            <td><span class="badge badge-green">Active</span></td>
+                            <td>75%</td>
+                            <td>May 15, 2026</td>
+                            <td>4 members</td>
+                        </tr>
+                        <tr>
+                            <td>Mobile App v2</td>
+                            <td><span class="badge badge-yellow">In Review</span></td>
+                            <td>90%</td>
+                            <td>Apr 30, 2026</td>
+                            <td>6 members</td>
+                        </tr>
+                        <tr>
+                            <td>API Migration</td>
+                            <td><span class="badge badge-blue">Planning</span></td>
+                            <td>20%</td>
+                            <td>Jun 01, 2026</td>
+                            <td>3 members</td>
+                        </tr>
+                        <tr>
+                            <td>Analytics Engine</td>
+                            <td><span class="badge badge-green">Active</span></td>
+                            <td>55%</td>
+                            <td>May 28, 2026</td>
+                            <td>5 members</td>
+                        </tr>
+                        <tr>
+                            <td>Security Audit</td>
+                            <td><span class="badge badge-red">Blocked</span></td>
+                            <td>35%</td>
+                            <td>May 10, 2026</td>
+                            <td>2 members</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
         </div>
-        <!-- End cards -->
 
+
+        <!-- ╔══════════════════════════════════════════════╗ -->
+        <!-- ║         TAB 3 — INSIGHTS                      ║ -->
+        <!-- ╚══════════════════════════════════════════════╝ -->
+        <div id="tab-insights" class="tab-content">
+
+            <div class="insights-grid">
+
+                <div class="insight-card">
+                    <div class="insight-header">
+                        <div class="insight-icon icon-purple">📈</div>
+                        <div>
+                            <div class="insight-title">User Growth Trend</div>
+                            <div class="insight-subtitle">Last 30 days analysis</div>
+                        </div>
+                    </div>
+                    <p class="insight-text">
+                        User signups have increased by 12.5% compared to the previous month.
+                        The highest growth was observed from organic search traffic,
+                        accounting for 45% of new registrations. Recommend increasing
+                        SEO investment for Q3.
+                    </p>
+                    <div class="insight-tags">
+                        <span class="tag">Growth</span>
+                        <span class="tag">Users</span>
+                        <span class="tag">SEO</span>
+                    </div>
+                </div>
+
+                <div class="insight-card">
+                    <div class="insight-header">
+                        <div class="insight-icon icon-green">💡</div>
+                        <div>
+                            <div class="insight-title">Revenue Optimization</div>
+                            <div class="insight-subtitle">Pricing analysis</div>
+                        </div>
+                    </div>
+                    <p class="insight-text">
+                        Premium tier conversion rates jumped from 8% to 14% after
+                        introducing the annual billing option. Customers who upgrade
+                        within the first 7 days have a 92% retention rate at 12 months.
+                    </p>
+                    <div class="insight-tags">
+                        <span class="tag">Revenue</span>
+                        <span class="tag">Pricing</span>
+                        <span class="tag">Retention</span>
+                    </div>
+                </div>
+
+                <div class="insight-card">
+                    <div class="insight-header">
+                        <div class="insight-icon icon-orange">⚠️</div>
+                        <div>
+                            <div class="insight-title">Performance Alert</div>
+                            <div class="insight-subtitle">Server response times</div>
+                        </div>
+                    </div>
+                    <p class="insight-text">
+                        Average API response time increased to 3.2 seconds during peak
+                        hours (2-4 PM UTC). Database query optimization on the analytics
+                        endpoint could reduce this by approximately 40%.
+                    </p>
+                    <div class="insight-tags">
+                        <span class="tag">Performance</span>
+                        <span class="tag">API</span>
+                        <span class="tag">Database</span>
+                    </div>
+                </div>
+
+                <div class="insight-card">
+                    <div class="insight-header">
+                        <div class="insight-icon icon-pink">🎯</div>
+                        <div>
+                            <div class="insight-title">Goal Progress</div>
+                            <div class="insight-subtitle">Q2 2026 OKRs</div>
+                        </div>
+                    </div>
+                    <p class="insight-text">
+                        3 out of 5 quarterly objectives are on track. Customer satisfaction
+                        score reached 4.6/5.0, exceeding the target of 4.5. Product
+                        launch timeline needs acceleration to meet the June deadline.
+                    </p>
+                    <div class="insight-tags">
+                        <span class="tag">Goals</span>
+                        <span class="tag">OKRs</span>
+                        <span class="tag">Q2</span>
+                    </div>
+                </div>
+
+                <div class="insight-card">
+                    <div class="insight-header">
+                        <div class="insight-icon icon-blue">🌐</div>
+                        <div>
+                            <div class="insight-title">Geographic Expansion</div>
+                            <div class="insight-subtitle">Market penetration</div>
+                        </div>
+                    </div>
+                    <p class="insight-text">
+                        Three new countries (Egypt, UAE, Saudi Arabia) added this quarter,
+                        bringing the total to 24 active markets. Middle East region
+                        shows the highest engagement rate at 68% weekly active users.
+                    </p>
+                    <div class="insight-tags">
+                        <span class="tag">Markets</span>
+                        <span class="tag">Expansion</span>
+                        <span class="tag">MENA</span>
+                    </div>
+                </div>
+
+                <div class="insight-card">
+                    <div class="insight-header">
+                        <div class="insight-icon icon-red">🔒</div>
+                        <div>
+                            <div class="insight-title">Security Summary</div>
+                            <div class="insight-subtitle">Monthly security report</div>
+                        </div>
+                    </div>
+                    <p class="insight-text">
+                        Zero critical vulnerabilities detected this month. SSL certificates
+                        renewed across all domains. Two-factor authentication adoption
+                        rate among team members has reached 100%.
+                    </p>
+                    <div class="insight-tags">
+                        <span class="tag">Security</span>
+                        <span class="tag">SSL</span>
+                        <span class="tag">2FA</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- ═══════════════ FOOTER ═══════════════ -->
         <div class="footer">
             Powered by <a href="https://streamlit.io" target="_blank">Streamlit</a>
             · Data from <a href="https://github.com/uecdashboard/my-dashboard" target="_blank">GitHub</a>
+            · Edit <code>dashboard.html</code> on GitHub to update
         </div>
 
     </div>
+
+    <!-- ═══════════════ TAB SWITCHING JS ═══════════════ -->
+    <script>
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+
+            // Show selected tab
+            document.getElementById('tab-' + tabName).classList.add('active');
+
+            // Highlight correct button
+            const buttons = document.querySelectorAll('.tab-btn');
+            const tabMap = { 'images': 0, 'statistics': 1, 'insights': 2 };
+            buttons[tabMap[tabName]].classList.add('active');
+        }
+    </script>
+
 </body>
 </html>
