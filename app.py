@@ -79,7 +79,7 @@ if github_owner and github_repo and html_filename:
         )
 
         # Render the HTML
-        components.html(html_content, height=1200, scrolling=True)
+        components.html(html_content, height=2000, scrolling=True)
 
     else:
         st.error(
