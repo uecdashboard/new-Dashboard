@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(160deg, #0a0a1a 0%, #1a1a3e 40%, #0f0c29 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; }
+
+        /* ══════════════════ HEADER ══════════════════ */
+        .header {
+            background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+            padding: 2rem 2.5rem;
+            border-radius: 14px;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+        .header h1 {
+            color: #fff; font-weight: 700; font-size: 1.8rem;
+        }
+        .header p {
+            color: rgba(255,255,255,0.6); font-size: 0.95rem;
+            margin-top: 0.4rem; font-weight: 400;
+        }
+
+        /* ══════════════════ TABS ══════════════════ */
+        .tab-nav {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            background: rgba(255,255,255,0.04);
+            border-radius: 16px;
+            padding: 0.4rem;
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+        .tab-btn {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: none;
+            background: transparent;
+            color: #888;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .tab-btn:hover {
+            color: #bbb;
+            background: rgba(255,255,255,0.04);
+        }
+        .tab-btn.active {
+            background: #667eea;
+            color: #fff;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ══════════════════ TAB 1: IMAGE REVIEW ══════════════════ */
+        .review-cards { display: flex; flex-direction: column; gap: 1.5rem; }
+
+        .review-card {
+            background: none;
+            border: none;
+            border-radius: 0;
+            overflow: hidden;
+        }
+        .review-card.approved {}
+
+        .review-image {
+            width: 100%; overflow: hidden;
+            background: #fff;
+        }
+        .review-image img {
+            width: 100%; height: auto; display: block;
+            filter: none;
+            box-shadow: none;
+        }
+
+        .review-body { padding: 1.2rem 1.5rem; }
+
+        .review-header {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 0.8rem; flex-wrap: wrap; gap: 0.8rem;
+        }
+        .review-title-area {}
+        .review-number {
+            font-size: 0.7rem; font-weight: 600; color: #667eea;
+            text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 0.2rem;
+        }
+        .review-title {
+            font-size: 1.15rem; font-weight: 600; color: #fff; line-height: 1.3;
+        }
+
+        /* ── Checkbox ── */
+        .checkbox-area {
+            display: flex; align-items: center;
+        }
+        .checkbox-area input[type="checkbox"] {
+            display: none;
+        }
+        .checkbox-area label {
+            display: flex; align-items: center; gap: 0.5rem;
+            cursor: pointer; padding: 0.5rem 1rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.12);
+            background: transparent;
+            color: #777; font-size: 0.8rem; font-weight: 500;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+        .checkbox-area label:hover {
+            border-color: rgba(255,255,255,0.25);
+            color: #999;
+        }
+        .checkbox-area input[type="checkbox"]:checked + label {
+            border-color: #4caf50;
+            background: rgba(76,175,80,0.1);
+            color: #4caf50;
+        }
+        .check-icon {
+            width: 18px; height: 18px;
+            border: 1.5px solid rgba(255,255,255,0.2);
+            border-radius: 4px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.7rem;
+            transition: all 0.2s ease;
+        }
+        .checkbox-area input[type="checkbox"]:checked + label .check-icon {
+            background: #4caf50;
+            border-color: #4caf50;
+            color: #fff;
+        }
+
+        .review-divider {
+            width: 100%; height: 1px;
+            background: rgba(255,255,255,0.06);
+            margin: 1rem 0;
+        }
+
+        /* ── Comment Section ── */
+        .comment-section { margin-top: 0.3rem; }
+        .comment-section h4 {
+            color: #999; font-size: 0.8rem; font-weight: 500;
+            margin-bottom: 0.6rem;
+        }
+        .comment-input-area {
+            display: flex; gap: 0.5rem; margin-bottom: 0.8rem;
+        }
+        .comment-input-area textarea {
+            flex: 1; padding: 0.6rem 0.8rem;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            color: #e0e0e0; font-family: 'Inter', sans-serif;
+            font-size: 0.82rem; resize: none;
+            outline: none;
+        }
+        .comment-input-area textarea:focus {
+            border-color: #667eea;
+        }
+        .comment-input-area textarea::placeholder { color: #555; }
+        .comment-btn {
+            padding: 0.6rem 1.2rem;
+            background: #667eea;
+            border: none; border-radius: 8px;
+            color: #fff; font-family: 'Inter', sans-serif;
+            font-size: 0.82rem; font-weight: 500;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .comment-btn:hover {
+            background: #5a6fd6;
+        }
+        .comments-list { display: flex; flex-direction: column; gap: 0.4rem; }
+        .comment-item {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 8px;
+            padding: 0.6rem 0.8rem;
+            display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem;
+        }
+        .comment-text {
+            font-size: 0.82rem; color: #bbb; line-height: 1.5; flex: 1;
+        }
+        .comment-time {
+            font-size: 0.68rem; color: #555; white-space: nowrap;
+        }
+        .comment-delete {
+            background: none; border: none; color: #555; cursor: pointer;
+            font-size: 0.7rem; padding: 0.2rem;
+        }
+        .comment-delete:hover { color: #e53935; }
+        .no-comments {
+            font-size: 0.78rem; color: #444; font-style: italic;
+        }
+
+        /* ══════════════════ TAB 2: STATISTICS ══════════════════ */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .stat-card {
+            background: rgba(255,255,255,0.04);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 4px;
+            border-radius: 20px 20px 0 0;
+        }
+        .stat-card:nth-child(1)::before { background: linear-gradient(90deg, #667eea, #764ba2); }
+        .stat-card:nth-child(2)::before { background: linear-gradient(90deg, #00e676, #00bcd4); }
+        .stat-card:nth-child(3)::before { background: linear-gradient(90deg, #ff9800, #f44336); }
+        .stat-card:nth-child(4)::before { background: linear-gradient(90deg, #e040fb, #7c4dff); }
+        .stat-card:nth-child(5)::before { background: linear-gradient(90deg, #448aff, #536dfe); }
+        .stat-card:nth-child(6)::before { background: linear-gradient(90deg, #ffab00, #ff6d00); }
+
+        .stat-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 48px rgba(0,0,0,0.25);
+        }
+        .stat-icon { font-size: 2.2rem; margin-bottom: 0.8rem; }
+        .stat-value {
+            font-size: 2.6rem; font-weight: 800;
+            background: linear-gradient(135deg, #667eea, #f093fb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.3rem;
+        }
+        .stat-label { font-size: 0.85rem; color: #888; font-weight: 500; }
+        .stat-change {
+            font-size: 0.78rem; margin-top: 0.6rem; font-weight: 600;
+        }
+        .stat-up   { color: #00e676; }
+        .stat-down { color: #ff1744; }
+
+        /* ── Chart placeholder ── */
+        .chart-section {
+            background: rgba(255,255,255,0.04);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+        .chart-section h3 {
+            color: #fff; font-weight: 700; margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+        .bar-chart { display: flex; align-items: flex-end; gap: 1rem; height: 200px; padding-top: 1rem; }
+        .bar-group { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
+        .bar {
+            width: 100%;
+            border-radius: 8px 8px 0 0;
+            transition: height 1s ease;
+            position: relative;
+            min-width: 40px;
+        }
+        .bar-label { font-size: 0.75rem; color: #888; }
+        .bar-value {
+            font-size: 0.7rem; color: #fff; font-weight: 600;
+            position: absolute; top: -20px; width: 100%; text-align: center;
+        }
+
+        /* ── Table ── */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 2rem;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+        .data-table th, .data-table td {
+            padding: 1rem 1.2rem;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+        .data-table th {
+            background: rgba(102, 126, 234, 0.2);
+            color: #fff; font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.75rem;
+        }
+        .data-table tr { border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .data-table tr:hover { background: rgba(102,126,234,0.08); }
+        .badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .badge-green { background: rgba(0,230,118,0.15); color: #00e676; }
+        .badge-yellow { background: rgba(255,171,0,0.15); color: #ffab00; }
+        .badge-red   { background: rgba(255,23,68,0.15); color: #ff1744; }
+        .badge-blue  { background: rgba(68,138,255,0.15); color: #448aff; }
+
+        /* ══════════════════ TAB 3: INSIGHTS ══════════════════ */
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 1.5rem;
+        }
+        .insight-card {
+            background: rgba(255,255,255,0.04);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .insight-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 48px rgba(0,0,0,0.2);
+        }
+        .insight-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.2rem;
+        }
+        .insight-icon {
+            width: 48px; height: 48px;
+            border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.4rem;
+        }
+        .icon-purple { background: rgba(102,126,234,0.2); }
+        .icon-green  { background: rgba(0,230,118,0.15); }
+        .icon-orange { background: rgba(255,152,0,0.15); }
+        .icon-pink   { background: rgba(224,64,251,0.15); }
+        .icon-blue   { background: rgba(68,138,255,0.15); }
+        .icon-red    { background: rgba(255,23,68,0.15); }
+
+        .insight-title {
+            font-size: 1.1rem; font-weight: 700; color: #fff;
+        }
+        .insight-subtitle {
+            font-size: 0.78rem; color: #888; margin-top: 0.15rem;
+        }
+        .insight-text {
+            font-size: 0.92rem; line-height: 1.7; color: #aaa; font-weight: 300;
+        }
+        .insight-tags {
+            display: flex; gap: 0.5rem; margin-top: 1.2rem; flex-wrap: wrap;
+        }
+        .tag {
+            padding: 0.25rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            background: rgba(102,126,234,0.15);
+            color: #667eea;
+        }
+
+        /* ══════════════════ FOOTER ══════════════════ */
+        .footer {
+            text-align: center; padding: 3rem 0 1rem;
+            color: #555; font-size: 0.8rem;
+        }
+        .footer a { color: #667eea; text-decoration: none; }
+
+        /* ══════════════════ RESPONSIVE ══════════════════ */
+        @media (max-width: 768px) {
+            .card, .card.reverse { flex-direction: column; }
+            .card-image { flex: none; max-width: 100%; height: 220px; }
+            body { padding: 1rem; }
+            .tab-btn { font-size: 0.8rem; padding: 0.8rem 0.5rem; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <!-- ═══════════════ HEADER ═══════════════ -->
+        <div class="header">
+            <h1>📊 My Dashboard</h1>
+            <p>Images, Statistics &amp; Insights — powered by GitHub, displayed on Streamlit</p>
+        </div>
+
+        <!-- ═══════════════ TAB NAVIGATION ═══════════════ -->
+        <div class="tab-nav">
+            <button class="tab-btn active" onclick="switchTab('images')">🖼️ Images</button>
+            <button class="tab-btn" onclick="switchTab('statistics')">📈 Statistics</button>
+            <button class="tab-btn" onclick="switchTab('insights')">💡 Insights</button>
+        </div>
+
+
+        <!-- ╔══════════════════════════════════════════════╗ -->
+        <!-- ║         TAB 1 — IMAGES & COMMENTS            ║ -->
+        <!-- ╚══════════════════════════════════════════════╝ -->
+        <div id="tab-images" class="tab-content active">
+
+            <div class="review-cards">
+
+                <!-- ──── Image 1 ──── -->
+                <div class="review-card" id="review-card-1">
+                    <div class="review-image">
+                        <img src="https://placehold.co/900x400/1a1a2e/667eea?text=Image+01+-+Project+Overview&font=inter"
+                             alt="Project Overview" />
+                    </div>
+                    <div class="review-body">
+                        <div class="review-header">
+                            <div class="review-title-area">
+                                <div class="review-number">Image 01</div>
+                                <div class="review-title">Project Overview</div>
+                            </div>
+                            <div class="checkbox-area">
+                                <input type="checkbox" id="check-1" onchange="toggleApproval(1, this)">
+                                <label for="check-1">
+                                    <span class="check-icon">✓</span>
+                                    Photo Approved
+                                </label>
+                            </div>
+                        </div>
+                        <div class="review-divider"></div>
+                        <div class="comment-section">
+                            <h4>💬 Comments</h4>
+                            <div class="comment-input-area">
+                                <textarea id="input-1" rows="2" placeholder="Write your comment about this image..."></textarea>
+                                <button class="comment-btn" onclick="addComment(1)">Send</button>
+                            </div>
+                            <div class="comments-list" id="comments-1">
+                                <div class="no-comments">No comments yet. Be the first to review!</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ──── Image 2 ──── -->
+                <div class="review-card" id="review-card-2">
+                    <div class="review-image">
+                        <img src="https://placehold.co/900x400/1a1a2e/e1306c?text=Image+02+-+Analytics+Report&font=inter"
+                             alt="Analytics Report" />
+                    </div>
+                    <div class="review-body">
+                        <div class="review-header">
+                            <div class="review-title-area">
+                                <div class="review-number">Image 02</div>
+                                <div class="review-title">Analytics Report</div>
+                            </div>
+                            <div class="checkbox-area">
+                                <input type="checkbox" id="check-2" onchange="toggleApproval(2, this)">
+                                <label for="check-2">
+                                    <span class="check-icon">✓</span>
+                                    Photo Approved
+                                </label>
+                            </div>
+                        </div>
+                        <div class="review-divider"></div>
+                        <div class="comment-section">
+                            <h4>💬 Comments</h4>
+                            <div class="comment-input-area">
+                                <textarea id="input-2" rows="2" placeholder="Write your comment about this image..."></textarea>
+                                <button class="comment-btn" onclick="addComment(2)">Send</button>
+                            </div>
+                            <div class="comments-list" id="comments-2">
+                                <div class="no-comments">No comments yet. Be the first to review!</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ──── Image 3 ──── -->
+                <div class="review-card" id="review-card-3">
+                    <div class="review-image">
+                        <img src="https://placehold.co/900x400/1a1a2e/25f4ee?text=Image+03+-+Team+Progress&font=inter"
+                             alt="Team Progress" />
+                    </div>
+                    <div class="review-body">
+                        <div class="review-header">
+                            <div class="review-title-area">
+                                <div class="review-number">Image 03</div>
+                                <div class="review-title">Team Progress</div>
+                            </div>
+                            <div class="checkbox-area">
+                                <input type="checkbox" id="check-3" onchange="toggleApproval(3, this)">
+                                <label for="check-3">
+                                    <span class="check-icon">✓</span>
+                                    Photo Approved
+                                </label>
+                            </div>
+                        </div>
+                        <div class="review-divider"></div>
+                        <div class="comment-section">
+                            <h4>💬 Comments</h4>
+                            <div class="comment-input-area">
+                                <textarea id="input-3" rows="2" placeholder="Write your comment about this image..."></textarea>
+                                <button class="comment-btn" onclick="addComment(3)">Send</button>
+                            </div>
+                            <div class="comments-list" id="comments-3">
+                                <div class="no-comments">No comments yet. Be the first to review!</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- ╔══════════════════════════════════════════════╗ -->
+        <!-- ║         TAB 2 — STATISTICS (Social Media)     ║ -->
+        <!-- ╚══════════════════════════════════════════════╝ -->
+        <div id="tab-statistics" class="tab-content">
+
+            <!-- ── FACEBOOK ── -->
+            <h3 style="color:#fff; font-size:1.3rem; margin-bottom:1rem; display:flex; align-items:center; gap:0.6rem;">
+                <span style="background:#1877F2; padding:0.4rem 0.7rem; border-radius:10px; font-size:1rem;">f</span>
+                Facebook Statistics
+            </h3>
+            <div class="stats-grid">
+                <div class="stat-card" style="border-top: 3px solid #1877F2;">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-value" style="background: linear-gradient(135deg, #1877F2, #42a5f5); -webkit-background-clip:text;">12.8K</div>
+                    <div class="stat-label">Page Followers</div>
+                    <div class="stat-change stat-up">▲ 8.2% vs last month</div>
+                </div>
+                <div class="stat-card" style="border-top: 3px solid #1877F2;">
+                    <div class="stat-icon">👁️</div>
+                    <div class="stat-value" style="background: linear-gradient(135deg, #1877F2, #42a5f5); -webkit-background-clip:text;">45.2K</div>
+                    <div class="stat-label">Post Reach</div>
+                    <div class="stat-change stat-up">▲ 15.3% vs last month</div>
+                </div>
+                <div class="stat-card" style="border-top: 3px solid #1877F2;">
+                    <div class="stat-icon">❤️</div>
+                    <div class="stat-value" style="background: linear-gradient(135deg, #1877F2, #42a5f5); -webkit-background-clip:text;">4.7%</div>
+                    <div class="stat-label">Engagement Rate</div>
+                    <div class="stat-change stat-up">▲ 1.2% vs last month</div>
+                </div>
+                <div class="stat-card" style="border-top: 3px solid #1877F2;">
+                    <div class="stat-icon">💬</div>
+                    <div class="stat-value" style="background: linear-gradient(135deg, #1877F2, #42a5f5); -webkit-background-clip:text;">892</div>
+                    <div class="stat-label">Comments</div>
+                    <div class="stat-change stat-up">▲ 22% vs last month</div>
+                </div>
+            </div>
+
+            <!-- ── INSTAGRAM ── -->
+            <h3 style="color:#fff; font-size:1.3rem; margin: 2rem 0 1rem; display:flex; align-items:center; gap:0.6rem;">
+                <span style="background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); padding:0.4rem 0.7rem; border-radius:10px; font-size:1rem;">📷</span>
+                Instagram Statistics
+            </h3>
+            <div class="stats-grid">
+                <div class="stat-card" style="border-top: 3px solid #E1306C;">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-value" style="background: linear-gradient(135deg, #E1306C, #F77737); -webkit-background-clip:text;">28.5K</div>
+                    <div class="stat-label">Followers</div>
+                    <div class="stat-change stat-up">▲ 12.1% vs last month</div>
+                </div>
+                <div class="stat-card" style="border-top: 3px solid #E1306C;">
+                    <div class="stat-icon">📸</div>
+                    <div class="stat-value" style="background: linear-gradient(135deg, #E1306C, #F77737); -webkit-background-clip:text;">156</div>
+                    <div class="stat-label">Posts This Month</div>
+                    <div class="stat-change stat-up">▲ 18 more than last month</div>
+                </div>
+                <div class="stat-card" style="border-top: 3px solid #E1306C;">
+                    <div class="stat-icon">🎬</div>
+                    <div class="stat-value" style="background: linear-gradient(135deg, #E1306C, #F77737); -webkit-background-clip:text;">85.3K</div>
+                    <div class="stat-label">Reels Views</div>
+                    <div class="stat-change stat-up">▲ 34% vs last month</div>
+                </div>
+                <div class="stat-card" style="border-top: 3px solid #E1306C;">
+                    <div class="stat-icon">📩</div>
+                    <div class="stat-value" style="background: linear-gradient(135deg, #E1306C, #F77737); -webkit-background-clip:text;">1.2K</div>
+                    <div class="stat-label">Story Replies</div>
+                    <div class="stat-change stat-up">▲ 9.5% vs last month</div>
+                </div>
+            </div>
+
+            <!-- ── TIKTOK ── -->
+            <h3 style="color:#fff; font-size:1.3rem; margin: 2rem 0 1rem; display:flex; align-items:center; gap:0.6rem;">
+                <span style="background:#000; border: 1px solid #25F4EE; padding:0.4rem 0.7rem; border-radius:10px; font-size:1rem;">🎵</span>
+                TikTok Statistics
+            </h3>
+            <div class="stats-grid">
+                <div class="stat-card" style="border-top: 3px solid #25F4EE;">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-value" style="background: linear-gradient(135deg, #25F4EE, #FE2C55); -webkit-background-clip:text;">52.1K</div>
+                    <div class="stat-label">Followers</div>
+                    <div class="stat-change stat-up">▲ 28.4% vs last month</div>
+                </div>
+                <div class="stat-card" style="border-top: 3px solid #FE2C55;">
+                    <div class="stat-icon">▶️</div>
+                    <div class="stat-value" style="background: linear-gradient(135deg, #25F4EE, #FE2C55); -webkit-background-clip:text;">1.8M</div>
+                    <div class="stat-label">Total Views</div>
+                    <div class="stat-change stat-up">▲ 45% vs last month</div>
+                </div>
+                <div class="stat-card" style="border-top: 3px solid #25F4EE;">
+                    <div class="stat-icon">❤️</div>
+                    <div class="stat-value" style="background: linear-gradient(135deg, #25F4EE, #FE2C55); -webkit-background-clip:text;">124K</div>
+                    <div class="stat-label">Total Likes</div>
+                    <div class="stat-change stat-up">▲ 38% vs last month</div>
+                </div>
+                <div class="stat-card" style="border-top: 3px solid #FE2C55;">
+                    <div class="stat-icon">🔄</div>
+                    <div class="stat-value" style="background: linear-gradient(135deg, #25F4EE, #FE2C55); -webkit-background-clip:text;">8.9K</div>
+                    <div class="stat-label">Shares</div>
+                    <div class="stat-change stat-up">▲ 52% vs last month</div>
+                </div>
+            </div>
+
+            <!-- ── LINKEDIN ── -->
+            <h3 style="color:#fff; font-size:1.3rem; margin: 2rem 0 1rem; display:flex; align-items:center; gap:0.6rem;">
+                <span style="background:#0A66C2; padding:0.4rem 0.7rem; border-radius:10px; font-size:1rem;">in</span>
+                LinkedIn Statistics
+            </h3>
+            <div class="stats-grid">
+                <div class="stat-card" style="border-top: 3px solid #0A66C2;">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-value" style="background: linear-gradient(135deg, #0A66C2, #0077B5); -webkit-background-clip:text;">6.4K</div>
+                    <div class="stat-label">Connections</div>
+                    <div class="stat-change stat-up">▲ 5.8% vs last month</div>
+                </div>
+                <div class="stat-card" style="border-top: 3px solid #0A66C2;">
+                    <div class="stat-icon">📄</div>
+                    <div class="stat-value" style="background: linear-gradient(135deg, #0A66C2, #0077B5); -webkit-background-clip:text;">18.7K</div>
+                    <div class="stat-label">Post Impressions</div>
+                    <div class="stat-change stat-up">▲ 21% vs last month</div>
+                </div>
+                <div class="stat-card" style="border-top: 3px solid #0A66C2;">
+                    <div class="stat-icon">🏢</div>
+                    <div class="stat-value" style="background: linear-gradient(135deg, #0A66C2, #0077B5); -webkit-background-clip:text;">342</div>
+                    <div class="stat-label">Company Page Views</div>
+                    <div class="stat-change stat-up">▲ 14% vs last month</div>
+                </div>
+                <div class="stat-card" style="border-top: 3px solid #0A66C2;">
+                    <div class="stat-icon">📨</div>
+                    <div class="stat-value" style="background: linear-gradient(135deg, #0A66C2, #0077B5); -webkit-background-clip:text;">67</div>
+                    <div class="stat-label">InMail Responses</div>
+                    <div class="stat-change stat-up">▲ 11% vs last month</div>
+                </div>
+            </div>
+
+            <!-- ── Follower Growth Chart ── -->
+            <div class="chart-section" style="margin-top: 2rem;">
+                <h3>📊 Follower Growth Comparison (Last 4 Months)</h3>
+                <div class="bar-chart">
+                    <div class="bar-group">
+                        <div class="bar" style="height:45%; background: linear-gradient(to top, #1877F2, #42a5f5);">
+                            <div class="bar-value">12.8K</div>
+                        </div>
+                        <div class="bar-label">Facebook</div>
+                    </div>
+                    <div class="bar-group">
+                        <div class="bar" style="height:60%; background: linear-gradient(to top, #E1306C, #F77737);">
+                            <div class="bar-value">28.5K</div>
+                        </div>
+                        <div class="bar-label">Instagram</div>
+                    </div>
+                    <div class="bar-group">
+                        <div class="bar" style="height:92%; background: linear-gradient(to top, #25F4EE, #FE2C55);">
+                            <div class="bar-value">52.1K</div>
+                        </div>
+                        <div class="bar-label">TikTok</div>
+                    </div>
+                    <div class="bar-group">
+                        <div class="bar" style="height:30%; background: linear-gradient(to top, #0A66C2, #0077B5);">
+                            <div class="bar-value">6.4K</div>
+                        </div>
+                        <div class="bar-label">LinkedIn</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── Platform Comparison Table ── -->
+            <div class="chart-section" style="margin-top: 1.5rem;">
+                <h3>📋 Platform Comparison</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Platform</th>
+                            <th>Followers</th>
+                            <th>Engagement</th>
+                            <th>Growth</th>
+                            <th>Best Content</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong style="color:#1877F2;">Facebook</strong></td>
+                            <td>12,800</td>
+                            <td>4.7%</td>
+                            <td>+8.2%</td>
+                            <td>Video Posts</td>
+                            <td><span class="badge badge-green">Growing</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color:#E1306C;">Instagram</strong></td>
+                            <td>28,500</td>
+                            <td>6.3%</td>
+                            <td>+12.1%</td>
+                            <td>Reels</td>
+                            <td><span class="badge badge-green">Growing</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color:#FE2C55;">TikTok</strong></td>
+                            <td>52,100</td>
+                            <td>9.8%</td>
+                            <td>+28.4%</td>
+                            <td>Short Videos</td>
+                            <td><span class="badge badge-blue">Booming</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color:#0A66C2;">LinkedIn</strong></td>
+                            <td>6,400</td>
+                            <td>3.1%</td>
+                            <td>+5.8%</td>
+                            <td>Articles</td>
+                            <td><span class="badge badge-yellow">Steady</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+
+        <!-- ╔══════════════════════════════════════════════╗ -->
+        <!-- ║     TAB 3 — INSIGHTS (Social Media)           ║ -->
+        <!-- ╚══════════════════════════════════════════════╝ -->
+        <div id="tab-insights" class="tab-content">
+
+            <!-- ── Facebook Insights ── -->
+            <h3 style="color:#fff; font-size:1.3rem; margin-bottom:1.2rem; display:flex; align-items:center; gap:0.6rem;">
+                <span style="background:#1877F2; padding:0.4rem 0.7rem; border-radius:10px; font-size:1rem;">f</span>
+                Facebook Insights
+            </h3>
+            <div class="insights-grid" style="margin-bottom: 2.5rem;">
+
+                <div class="insight-card" style="border-left: 3px solid #1877F2;">
+                    <div class="insight-header">
+                        <div class="insight-icon" style="background: rgba(24,119,242,0.2);">📈</div>
+                        <div>
+                            <div class="insight-title">Page Reach Growing</div>
+                            <div class="insight-subtitle">Weekly performance analysis</div>
+                        </div>
+                    </div>
+                    <p class="insight-text">
+                        Facebook page reach increased by 15.3% this month. Video posts are
+                        generating 3x more reach than image posts. The best performing
+                        content was posted between 6-8 PM. Consider scheduling more
+                        video content during evening hours for maximum visibility.
+                    </p>
+                    <div class="insight-tags">
+                        <span class="tag" style="background:rgba(24,119,242,0.15); color:#1877F2;">Reach</span>
+                        <span class="tag" style="background:rgba(24,119,242,0.15); color:#1877F2;">Video</span>
+                        <span class="tag" style="background:rgba(24,119,242,0.15); color:#1877F2;">Scheduling</span>
+                    </div>
+                </div>
+
+                <div class="insight-card" style="border-left: 3px solid #1877F2;">
+                    <div class="insight-header">
+                        <div class="insight-icon" style="background: rgba(24,119,242,0.2);">💬</div>
+                        <div>
+                            <div class="insight-title">Comment Engagement Up</div>
+                            <div class="insight-subtitle">Community interaction report</div>
+                        </div>
+                    </div>
+                    <p class="insight-text">
+                        Posts with questions in the caption received 22% more comments.
+                        Response time to inbox messages averaged 45 minutes. 
+                        Facebook Groups activity increased by 18%, driving more organic
+                        traffic back to the main page.
+                    </p>
+                    <div class="insight-tags">
+                        <span class="tag" style="background:rgba(24,119,242,0.15); color:#1877F2;">Comments</span>
+                        <span class="tag" style="background:rgba(24,119,242,0.15); color:#1877F2;">Groups</span>
+                        <span class="tag" style="background:rgba(24,119,242,0.15); color:#1877F2;">Engagement</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ── Instagram Insights ── -->
+            <h3 style="color:#fff; font-size:1.3rem; margin-bottom:1.2rem; display:flex; align-items:center; gap:0.6rem;">
+                <span style="background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); padding:0.4rem 0.7rem; border-radius:10px; font-size:1rem;">📷</span>
+                Instagram Insights
+            </h3>
+            <div class="insights-grid" style="margin-bottom: 2.5rem;">
+
+                <div class="insight-card" style="border-left: 3px solid #E1306C;">
+                    <div class="insight-header">
+                        <div class="insight-icon" style="background: rgba(225,48,108,0.15);">🎬</div>
+                        <div>
+                            <div class="insight-title">Reels Outperforming Posts</div>
+                            <div class="insight-subtitle">Content format comparison</div>
+                        </div>
+                    </div>
+                    <p class="insight-text">
+                        Instagram Reels are generating 34% more views than static posts.
+                        Average watch time is 12 seconds per reel. Reels with trending
+                        audio received 2.5x more shares. Stories with polls and quizzes
+                        had the highest tap-forward rate at only 15%.
+                    </p>
+                    <div class="insight-tags">
+                        <span class="tag" style="background:rgba(225,48,108,0.15); color:#E1306C;">Reels</span>
+                        <span class="tag" style="background:rgba(225,48,108,0.15); color:#E1306C;">Stories</span>
+                        <span class="tag" style="background:rgba(225,48,108,0.15); color:#E1306C;">Trending</span>
+                    </div>
+                </div>
+
+                <div class="insight-card" style="border-left: 3px solid #E1306C;">
+                    <div class="insight-header">
+                        <div class="insight-icon" style="background: rgba(225,48,108,0.15);">🛍️</div>
+                        <div>
+                            <div class="insight-title">Shopping Feature Growth</div>
+                            <div class="insight-subtitle">E-commerce integration</div>
+                        </div>
+                    </div>
+                    <p class="insight-text">
+                        Product tags in posts drove 340 clicks to the shop this month,
+                        up 45% from last month. Carousel posts with tagged products
+                        converted 3x better than single image posts. The 25-34 age
+                        demographic makes up 62% of all shop visitors.
+                    </p>
+                    <div class="insight-tags">
+                        <span class="tag" style="background:rgba(225,48,108,0.15); color:#E1306C;">Shopping</span>
+                        <span class="tag" style="background:rgba(225,48,108,0.15); color:#E1306C;">Carousel</span>
+                        <span class="tag" style="background:rgba(225,48,108,0.15); color:#E1306C;">Conversion</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ── TikTok Insights ── -->
+            <h3 style="color:#fff; font-size:1.3rem; margin-bottom:1.2rem; display:flex; align-items:center; gap:0.6rem;">
+                <span style="background:#000; border: 1px solid #25F4EE; padding:0.4rem 0.7rem; border-radius:10px; font-size:1rem;">🎵</span>
+                TikTok Insights
+            </h3>
+            <div class="insights-grid" style="margin-bottom: 2.5rem;">
+
+                <div class="insight-card" style="border-left: 3px solid #25F4EE;">
+                    <div class="insight-header">
+                        <div class="insight-icon" style="background: rgba(37,244,238,0.12);">🚀</div>
+                        <div>
+                            <div class="insight-title">Viral Content Pattern</div>
+                            <div class="insight-subtitle">Algorithm performance analysis</div>
+                        </div>
+                    </div>
+                    <p class="insight-text">
+                        TikTok is the fastest growing platform with 28.4% follower increase.
+                        Videos under 30 seconds have 67% higher completion rate. 
+                        Content using trending sounds within the first 48 hours gets
+                        pushed to 5x more For You Pages. Two videos went semi-viral
+                        with 200K+ views each this month.
+                    </p>
+                    <div class="insight-tags">
+                        <span class="tag" style="background:rgba(37,244,238,0.12); color:#25F4EE;">Viral</span>
+                        <span class="tag" style="background:rgba(254,44,85,0.12); color:#FE2C55;">Algorithm</span>
+                        <span class="tag" style="background:rgba(37,244,238,0.12); color:#25F4EE;">Trending</span>
+                    </div>
+                </div>
+
+                <div class="insight-card" style="border-left: 3px solid #FE2C55;">
+                    <div class="insight-header">
+                        <div class="insight-icon" style="background: rgba(254,44,85,0.12);">👥</div>
+                        <div>
+                            <div class="insight-title">Audience Demographics</div>
+                            <div class="insight-subtitle">Follower breakdown</div>
+                        </div>
+                    </div>
+                    <p class="insight-text">
+                        78% of TikTok followers are aged 18-34. Peak engagement
+                        hours are 7-9 PM and 12-1 PM. Duet and stitch videos
+                        generate 40% more comments than regular posts. Hashtag
+                        challenges drove 8.9K shares this month — the highest
+                        share rate across all platforms.
+                    </p>
+                    <div class="insight-tags">
+                        <span class="tag" style="background:rgba(254,44,85,0.12); color:#FE2C55;">Demographics</span>
+                        <span class="tag" style="background:rgba(37,244,238,0.12); color:#25F4EE;">Duets</span>
+                        <span class="tag" style="background:rgba(254,44,85,0.12); color:#FE2C55;">Shares</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ── LinkedIn Insights ── -->
+            <h3 style="color:#fff; font-size:1.3rem; margin-bottom:1.2rem; display:flex; align-items:center; gap:0.6rem;">
+                <span style="background:#0A66C2; padding:0.4rem 0.7rem; border-radius:10px; font-size:1rem;">in</span>
+                LinkedIn Insights
+            </h3>
+            <div class="insights-grid">
+
+                <div class="insight-card" style="border-left: 3px solid #0A66C2;">
+                    <div class="insight-header">
+                        <div class="insight-icon" style="background: rgba(10,102,194,0.2);">📝</div>
+                        <div>
+                            <div class="insight-title">Thought Leadership Impact</div>
+                            <div class="insight-subtitle">Content authority metrics</div>
+                        </div>
+                    </div>
+                    <p class="insight-text">
+                        Long-form articles (1,000+ words) received 3x more engagement
+                        than short posts. Document/PDF posts generated 21% more impressions
+                        than other formats. Posts published on Tuesday and Thursday mornings
+                        (8-10 AM) consistently outperform other time slots.
+                    </p>
+                    <div class="insight-tags">
+                        <span class="tag" style="background:rgba(10,102,194,0.2); color:#0A66C2;">Articles</span>
+                        <span class="tag" style="background:rgba(10,102,194,0.2); color:#0A66C2;">Authority</span>
+                        <span class="tag" style="background:rgba(10,102,194,0.2); color:#0A66C2;">B2B</span>
+                    </div>
+                </div>
+
+                <div class="insight-card" style="border-left: 3px solid #0A66C2;">
+                    <div class="insight-header">
+                        <div class="insight-icon" style="background: rgba(10,102,194,0.2);">🤝</div>
+                        <div>
+                            <div class="insight-title">Network Growth Strategy</div>
+                            <div class="insight-subtitle">Connection quality analysis</div>
+                        </div>
+                    </div>
+                    <p class="insight-text">
+                        67 InMail responses received this month with a 34% response rate.
+                        Company page followers grew by 5.8%. Employee advocacy posts
+                        generated 4x more reach than company page posts alone. 
+                        Recommendation: Encourage team members to share company updates.
+                    </p>
+                    <div class="insight-tags">
+                        <span class="tag" style="background:rgba(10,102,194,0.2); color:#0A66C2;">Networking</span>
+                        <span class="tag" style="background:rgba(10,102,194,0.2); color:#0A66C2;">Advocacy</span>
+                        <span class="tag" style="background:rgba(10,102,194,0.2); color:#0A66C2;">InMail</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- ═══════════════ FOOTER ═══════════════ -->
+        <div class="footer">
+            Powered by <a href="https://streamlit.io" target="_blank">Streamlit</a>
+            · Data from <a href="https://github.com/uecdashboard/my-dashboard" target="_blank">GitHub</a>
+            · Edit <code>dashboard.html</code> on GitHub to update
+        </div>
+
+    </div>
+
+    <!-- ═══════════════ JAVASCRIPT ═══════════════ -->
+    <script>
+        // ── Tab Switching ──
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById('tab-' + tabName).classList.add('active');
+            const buttons = document.querySelectorAll('.tab-btn');
+            const tabMap = { 'images': 0, 'statistics': 1, 'insights': 2 };
+            buttons[tabMap[tabName]].classList.add('active');
+        }
+
+        // ── Storage helpers ──
+        function getComments(imageId) {
+            const data = localStorage.getItem('dashboard_comments_' + imageId);
+            return data ? JSON.parse(data) : [];
+        }
+        function saveComments(imageId, comments) {
+            localStorage.setItem('dashboard_comments_' + imageId, JSON.stringify(comments));
+        }
+        function getApproval(imageId) {
+            return localStorage.getItem('dashboard_approved_' + imageId) === 'true';
+        }
+        function saveApproval(imageId, approved) {
+            localStorage.setItem('dashboard_approved_' + imageId, approved ? 'true' : 'false');
+        }
+
+        // ── Toggle Checkbox Approval ──
+        function toggleApproval(imageId, checkbox) {
+            const card = document.getElementById('review-card-' + imageId);
+            if (checkbox.checked) {
+                card.classList.add('approved');
+            } else {
+                card.classList.remove('approved');
+            }
+            saveApproval(imageId, checkbox.checked);
+        }
+
+        // ── Render Comments ──
+        function renderComments(imageId) {
+            const container = document.getElementById('comments-' + imageId);
+            const comments = getComments(imageId);
+
+            if (comments.length === 0) {
+                container.innerHTML = '<div class="no-comments">No comments yet. Be the first to review!</div>';
+                return;
+            }
+
+            container.innerHTML = comments.map((c, index) => `
+                <div class="comment-item">
+                    <div class="comment-text">${escapeHtml(c.text)}</div>
+                    <div class="comment-time">${c.time}</div>
+                    <button class="comment-delete" onclick="deleteComment(${imageId}, ${index})" title="Delete">✕</button>
+                </div>
+            `).join('');
+        }
+
+        // ── Add Comment ──
+        function addComment(imageId) {
+            const input = document.getElementById('input-' + imageId);
+            const text = input.value.trim();
+            if (!text) return;
+
+            const comments = getComments(imageId);
+            const now = new Date();
+            const time = now.toLocaleString('en-US', {
+                month: 'short', day: 'numeric',
+                hour: '2-digit', minute: '2-digit'
+            });
+
+            comments.push({ text: text, time: time });
+            saveComments(imageId, comments);
+            renderComments(imageId);
+            input.value = '';
+        }
+
+        // ── Delete Comment ──
+        function deleteComment(imageId, index) {
+            const comments = getComments(imageId);
+            comments.splice(index, 1);
+            saveComments(imageId, comments);
+            renderComments(imageId);
+        }
+
+        // ── Escape HTML to prevent XSS ──
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // ── Keyboard shortcut: Enter to send comment ──
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                const target = e.target;
+                if (target.tagName === 'TEXTAREA' && target.id.startsWith('input-')) {
+                    e.preventDefault();
+                    const imageId = target.id.replace('input-', '');
+                    addComment(parseInt(imageId));
+                }
+            }
+        });
+
+        // ── Load saved state on page load ──
+        function loadSavedState() {
+            for (let i = 1; i <= 3; i++) {
+                // Load checkbox state
+                const approved = getApproval(i);
+                const checkbox = document.getElementById('check-' + i);
+                const card = document.getElementById('review-card-' + i);
+                if (checkbox && approved) {
+                    checkbox.checked = true;
+                    card.classList.add('approved');
+                }
+                // Load comments
+                renderComments(i);
+            }
+        }
+
+        // Run on load
+        loadSavedState();
+    </script>
+
+</body>
+</html>
+
