@@ -1,0 +1,25 @@
+backend:
+  name: github
+  repo: uecdashboard/new-Dashboard
+  branch: main
+  use_pkce: true
+  client_id: Ov23lijGYROV67Fkl8vb
+
+media_folder: "images"
+public_folder: "images"
+
+collections:
+  - name: "content"
+    label: "Dashboard Content"
+    files:
+      - label: "Image Gallery"
+        name: "gallery"
+        file: "data/gallery.json"
+        fields:
+          - label: "Images"
+            name: "items"
+            widget: "list"
+            fields:
+              - {label: "Image ID Number", name: "id", widget: "number", hint: "Must be unique (e.g., 1, 2, 3) for the comment system"}
+              - {label: "File", name: "image", widget: "image"}
+              - {label: "Title", name: "title", widget: "string"}
