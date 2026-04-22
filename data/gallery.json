@@ -2,17 +2,17 @@
   "items": [
     {
       "id": 1,
-      "image": "/images/cats.jpeg",
+      "image": "/images/1.png",
       "title": "UEC Post 1"
     },
     {
       "id": 2,
-      "image": "/images/2.jpg",
+      "image": "/images/sample1.png",
       "title": "UEC Post 2"
     },
     {
       "id": 3,
-      "image": "images/3.png",
+      "image": "/images/download (1).jpeg",
       "title": "UEC Post 3"
     },
     {
