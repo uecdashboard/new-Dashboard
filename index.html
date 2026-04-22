@@ -846,22 +846,33 @@
             }
         }
 
-        setTimeout(fetchLiveData, 150);
-        setTimeout(fetchGalleryData, 200);
+        // Execute Data and Gallery Fetches Immediately
+        fetchLiveData();
+        fetchGalleryData();
 
         // ── DYNAMIC GALLERY INJECTION (Decap CMS) ──
+        // ── DYNAMIC GALLERY INJECTION (Decap/Sveltia CMS) ──
         function fetchGalleryData() {
-            fetch('data/gallery.json')
-                .then(res => res.json())
-                .then(data => {
-                    if(data && data.items) {
-                        renderGallery(data.items);
-                    }
-                })
-                .catch(err => {
-                    console.error("Error loading gallery JSON:", err);
-                    document.getElementById('dynamic-gallery-root').innerHTML = "<div style='color:red; text-align:center;'>Error loading gallery.</div>";
-                });
+            try {
+                fetch('data/gallery.json')
+                    .then(res => {
+                        if (!res.ok) throw new Error('HTTP Status: ' + res.status);
+                        return res.json();
+                    })
+                    .then(data => {
+                        if(data && data.items) {
+                            renderGallery(data.items);
+                        } else {
+                            document.getElementById('dynamic-gallery-root').innerHTML = "Gallery Data items missing.";
+                        }
+                    })
+                    .catch(err => {
+                        console.error("Error loading gallery JSON:", err);
+                        document.getElementById('dynamic-gallery-root').innerHTML = "Gallery Error (Fetch): " + err.message;
+                    });
+            } catch (globalErr) {
+                document.getElementById('dynamic-gallery-root').innerHTML = "Gallery Error (Logic): " + globalErr.message;
+            }
         }
 
         function renderGallery(items) {
@@ -903,10 +914,14 @@
                     </div>
                 </div>`;
             });
-            document.getElementById('dynamic-gallery-root').innerHTML = html;
-            // Now that DOM elements exist, hook up saved comments and boxes!
-            if(typeof loadSavedState === 'function') {
-                loadSavedState(); 
+            try {
+                document.getElementById('dynamic-gallery-root').innerHTML = html;
+                // Now that DOM elements exist, hook up saved comments and boxes!
+                if(typeof loadSavedState === 'function') {
+                    loadSavedState(); 
+                }
+            } catch (err) {
+                document.getElementById('dynamic-gallery-root').innerHTML = "Error rendering: " + err.message;
             }
         }
         
