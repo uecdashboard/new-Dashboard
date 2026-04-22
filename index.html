@@ -1330,7 +1330,10 @@
             if(data.Stats) {
                 data.Stats.forEach(s => {
                     const plat = s.Platform || "Unknown";
-                    if(!plat || plat.trim() === '' || plat === 'Platform') return; // Skip empty rows
+                    // Skip empty rows or accidentally pasted header rows
+                    if(!plat || plat.trim() === '' || plat === 'Platform') return; 
+                    if(s.Metric === '' || s.Value === '') return;
+                    
                     if(!statsGroups[plat]) statsGroups[plat] = [];
                     statsGroups[plat].push(s);
                 });
