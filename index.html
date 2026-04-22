@@ -846,8 +846,8 @@
             }
         }
 
-        // Fetch live data on load after a tiny delay so UI paints the loading spinner smoothly
-        setTimeout(fetchLiveData, 150);\n        setTimeout(fetchGalleryData, 200);
+        setTimeout(fetchLiveData, 150);
+        setTimeout(fetchGalleryData, 200);
 
         // ── DYNAMIC GALLERY INJECTION (Decap CMS) ──
         function fetchGalleryData() {
@@ -868,10 +868,12 @@
             let html = '';
             items.forEach(item => {
                 const id = item.id;
+                let imageSrc = item.image || '';
+                if(imageSrc.startsWith('/')) imageSrc = imageSrc.substring(1);
                 html += `
                 <div class="review-card" id="review-card-${id}">
                     <div class="review-image">
-                        <img src="${item.image}" alt="${item.title}" />
+                        <img src="${imageSrc}" alt="${item.title}" />
                     </div>
                     <div class="review-body">
                         <div class="review-header">
