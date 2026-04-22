@@ -1254,7 +1254,7 @@
     
         // ── DYNAMIC DATA INTEGRATION (GOOGLE SHEETS) ──
         // PASTE YOUR GOOGLE SCRIPT URL HERE inside the quotes:
-        const DATA_API_URL = 'https://script.google.com/macros/s/AKfycbxacO2z0dpRxC1qbU_uY0M1tHCzNB0iiiuP5Hjp6BgtIgd_3zzLvPqzss7DCB_t73PZ/exec'; 
+        const DATA_API_URL = 'https://script.google.com/macros/s/AKfycbz5IrjPl5gv1t7kKJ_KexzQN6VEGr_6uVvgn_P7ARcCJfguMNMqD-RJX7sO_F-wjWT2/exec'; 
 
         const brandConfig = {
             "Facebook": { color: '#1877F2', grad: 'linear-gradient(135deg, #1877F2, #42a5f5)', iconHtml: '<span style="background:#1877F2; padding:0.4rem 0.7rem; border-radius:10px; font-size:1rem; color:#fff;">f</span>', iconBg: 'rgba(24,119,242,0.2)' },
@@ -1329,8 +1329,10 @@
             const statsGroups = {};
             if(data.Stats) {
                 data.Stats.forEach(s => {
-                    if(!statsGroups[s.Platform]) statsGroups[s.Platform] = [];
-                    statsGroups[s.Platform].push(s);
+                    const plat = s.Platform || "Unknown";
+                    if(!plat || plat.trim() === '' || plat === 'Platform') return; // Skip empty rows
+                    if(!statsGroups[plat]) statsGroups[plat] = [];
+                    statsGroups[plat].push(s);
                 });
                 let statsHtml = '';
                 for (const [platform, stats] of Object.entries(statsGroups)) {
@@ -1339,9 +1341,14 @@
                     stats.forEach(stat => {
                         const changeClass = String(stat.Direction).toLowerCase() === 'down' ? 'stat-down' : 'stat-up';
                         const changeArrow = String(stat.Direction).toLowerCase() === 'down' ? '▼' : '▲';
+                        
+                        // Formatting fixes for percentage values showing as decimals
+                        let valText = stat.Value;
+                        if(typeof valText === 'number' && valText < 1 && valText > 0) valText = (valText * 100).toFixed(1) + '%';
+
                         statsHtml += `<div class="stat-card" style="border-top: 3px solid ${conf.color};">
-                            <div class="stat-icon">${stat.Icon}</div>
-                            <div class="stat-value" style="background: ${conf.grad}; -webkit-background-clip:text;">${stat.Value}</div>
+                            <div class="stat-icon">${stat.Icon || ''}</div>
+                            <div class="stat-value" style="background: ${conf.grad}; -webkit-background-clip:text;">${valText}</div>
                             <div class="stat-label">${stat.Metric}</div>
                             <div class="stat-change ${changeClass}">${changeArrow} ${stat.ChangeText}</div>
                         </div>`;
@@ -1357,10 +1364,15 @@
             if(data.Chart && chartRoot) {
                 let chartHtml = '';
                 data.Chart.forEach(c => {
+                    if(!c.Platform || c.Platform.trim() === '' || c.Platform === 'Platform') return;
                     const conf = brandConfig[c.Platform] || brandConfig["Facebook"];
+                    
+                    let heightStyle = c.BarHeight || c.Height;
+                    if(typeof heightStyle === 'number') heightStyle = (heightStyle * 100) + '%';
+                    
                     chartHtml += `<div class="bar-group">
-                        <div class="bar" style="height:${c.Height}; background: ${conf.grad};">
-                            <div class="bar-value">${c.Value}</div>
+                        <div class="bar" style="height:${heightStyle}; background: ${conf.grad};">
+                            <div class="bar-value">${c.Followers || c.Value}</div>
                         </div>
                         <div class="bar-label" style="display:flex; align-items:center;">
                             <div style="transform: scale(0.7); margin-right:-5px;">${conf.iconHtml}</div>${c.Platform}
@@ -1375,14 +1387,27 @@
             if(data.Table && tableRoot) {
                 let tableHtml = '';
                 data.Table.forEach(row => {
+                    if(!row.Platform || row.Platform.trim() === '' || row.Platform === 'Platform') return;
                     const conf = brandConfig[row.Platform] || brandConfig["Facebook"];
+                    
+                    const statValue = String(row.Status || '').toLowerCase();
+                    let badgeColor = 'yellow';
+                    if(statValue.includes('grow')) badgeColor = 'green';
+                    if(statValue.includes('boom')) badgeColor = 'blue';
+
+                    let engText = row.Engagement;
+                    if(typeof engText === 'number') engText = (engText * 100).toFixed(1) + '%';
+                    
+                    let growText = row.Growth;
+                    if(typeof growText === 'number') growText = '+' + (growText * 100).toFixed(1) + '%';
+
                     tableHtml += `<tr>
                         <td><strong style="color:${conf.color};">${row.Platform}</strong></td>
                         <td>${row.Followers}</td>
-                        <td>${row.Engagement}</td>
-                        <td>${row.Growth}</td>
-                        <td>${row.BestContent}</td>
-                        <td><span class="badge badge-${row.StatusColor}">${row.Status}</span></td>
+                        <td>${engText}</td>
+                        <td>${growText}</td>
+                        <td>${row['Best Content'] || row.BestContent || ''}</td>
+                        <td><span class="badge badge-${badgeColor}">${row.Status || ''}</span></td>
                     </tr>`;
                 });
                 tableRoot.innerHTML = tableHtml;
@@ -1393,25 +1418,30 @@
             if(data.Insights && insightsRoot) {
                 const insightGroups = {};
                 data.Insights.forEach(i => {
-                    if(!insightGroups[i.Platform]) insightGroups[i.Platform] = [];
-                    insightGroups[i.Platform].push(i);
+                    const plat = i.Category || i.Platform;
+                    if(!plat || plat.trim() === '' || plat === 'Category' || plat === 'Platform') return;
+                    if(!insightGroups[plat]) insightGroups[plat] = [];
+                    insightGroups[plat].push(i);
                 });
                 let insightsHtml = '';
                 for (const [platform, insights] of Object.entries(insightGroups)) {
                     const conf = brandConfig[platform] || brandConfig["Facebook"];
                     insightsHtml += `<h3 style="color:#fff; font-size:1.3rem; margin: 2rem 0 1.2rem; display:flex; align-items:center; gap:0.6rem;">${conf.iconHtml} ${platform} Insights</h3><div class="insights-grid" style="margin-bottom: 2.5rem;">`;
                     insights.forEach(ins => {
-                        const tagsStr = ins.Tags ? String(ins.Tags) : "";
+                        const tagsStr = ins.Keywords || ins.Tags ? String(ins.Keywords || ins.Tags) : "";
                         const tagsHtml = tagsStr.split(',').filter(t => t.trim()).map(t => `<span class="tag" style="background:${conf.iconBg}; color:${conf.color};">${t.trim()}</span>`).join('');
+                        
+                        const defaultIcon = "💡";
+                        
                         insightsHtml += `<div class="insight-card" style="border-left: 3px solid ${conf.color};">
                             <div class="insight-header">
-                                <div class="insight-icon" style="background: ${conf.iconBg};">${ins.Icon}</div>
+                                <div class="insight-icon" style="background: ${conf.iconBg};">${ins.Icon || defaultIcon}</div>
                                 <div>
-                                    <div class="insight-title">${ins.Title}</div>
-                                    <div class="insight-subtitle">${ins.Subtitle}</div>
+                                    <div class="insight-title">${ins.Insight || ins.Title}</div>
+                                    <div class="insight-subtitle">${ins.Description || ins.Subtitle}</div>
                                 </div>
                             </div>
-                            <p class="insight-text">${ins.Text}</p>
+                            <p class="insight-text">${ins.Details || ins.Text}</p>
                             <div class="insight-tags">${tagsHtml}</div>
                         </div>`;
                     });
