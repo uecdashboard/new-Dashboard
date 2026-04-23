@@ -2,22 +2,22 @@
   "items": [
     {
       "id": 1,
-      "image": "/images/OIP (3).jpeg",
+      "image": "/images/1.png",
       "title": "UEC Post 1"
     },
     {
       "id": 2,
-      "image": "/images/download.jpeg",
+      "image": "/images/2.jpg",
       "title": "UEC Post 2"
     },
     {
       "id": 3,
-      "image": "/images/download (1).jpeg",
+      "image": "/images/3.png",
       "title": "UEC Post 3"
     },
     {
       "id": 4,
-      "image": "images/4.png",
+      "image": "/images/4.png",
       "title": "UEC Post 4"
     },
     {
