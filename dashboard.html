@@ -394,9 +394,12 @@
 
         /* ══════════════════ REELS TAB ══════════════════ */
         .reels-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             gap: 2rem;
+            max-width: 420px;
+            margin: 0 auto;
         }
         .reel-card {
             background: rgba(255,255,255,0.04);
