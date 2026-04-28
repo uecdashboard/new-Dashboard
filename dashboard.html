@@ -412,15 +412,17 @@
         .reel-video-wrapper {
             position: relative;
             width: 100%;
+            padding-bottom: 177.78%; /* 9:16 vertical aspect ratio for Shorts */
             background: #000;
             border-radius: 20px 20px 0 0;
             overflow: hidden;
         }
-        .reel-video-wrapper video {
+        .reel-video-wrapper iframe {
+            position: absolute;
+            top: 0; left: 0;
             width: 100%;
-            display: block;
-            max-height: 500px;
-            object-fit: cover;
+            height: 100%;
+            border: none;
         }
         .reel-overlay {
             position: absolute;
@@ -508,15 +510,12 @@
                 <!-- ──── Reel 1 ──── -->
                 <div class="reel-card">
                     <div class="reel-video-wrapper">
-                        <video controls preload="metadata" poster="">
-                            <source src="Videos/Video 1.mp4" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
+                        <iframe src="https://www.youtube.com/embed/vqBtIaXzGcI" title="Reel 1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
                     </div>
                     <div class="reel-body">
                         <div class="reel-title">🎬 Reel 1</div>
                         <div class="reel-meta">
-                            <span class="reel-badge">📹 Video</span>
+                            <span class="reel-badge">📹 YouTube Short</span>
                             <span>UEC Marketing</span>
                         </div>
                     </div>
@@ -525,15 +524,12 @@
                 <!-- ──── Reel 2 ──── -->
                 <div class="reel-card">
                     <div class="reel-video-wrapper">
-                        <video controls preload="metadata" poster="">
-                            <source src="Videos/Video 2.mp4" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
+                        <iframe src="https://www.youtube.com/embed/NdKQx3uIlf8" title="Reel 2" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
                     </div>
                     <div class="reel-body">
                         <div class="reel-title">🎬 Reel 2</div>
                         <div class="reel-meta">
-                            <span class="reel-badge">📹 Video</span>
+                            <span class="reel-badge">📹 YouTube Short</span>
                             <span>UEC Marketing</span>
                         </div>
                     </div>
@@ -542,15 +538,12 @@
                 <!-- ──── Reel 3 ──── -->
                 <div class="reel-card">
                     <div class="reel-video-wrapper">
-                        <video controls preload="metadata" poster="">
-                            <source src="Videos/Video 3.mp4" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
+                        <iframe src="https://www.youtube.com/embed/V8Szta7CumU" title="Reel 3" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
                     </div>
                     <div class="reel-body">
                         <div class="reel-title">🎬 Reel 3</div>
                         <div class="reel-meta">
-                            <span class="reel-badge">📹 Video</span>
+                            <span class="reel-badge">📹 YouTube Short</span>
                             <span>UEC Marketing</span>
                         </div>
                     </div>
