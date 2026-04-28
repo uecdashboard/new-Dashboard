@@ -23,3 +23,14 @@ collections:
               - {label: "Image ID Number", name: "id", widget: "number", hint: "Must be unique (e.g., 1, 2, 3) for the comment system"}
               - {label: "File", name: "image", widget: "image"}
               - {label: "Title", name: "title", widget: "string"}
+      - label: "Reels Gallery"
+        name: "reels"
+        file: "data/reels.json"
+        fields:
+          - label: "Reels"
+            name: "items"
+            widget: "list"
+            fields:
+              - {label: "Reel Number", name: "id", widget: "number", hint: "Must be unique (e.g., 1, 2, 3)"}
+              - {label: "YouTube Video ID", name: "youtube_id", widget: "string", hint: "The ID from the YouTube link. Example: if link is youtube.com/shorts/ABC123 then type ABC123"}
+              - {label: "Title", name: "title", widget: "string", hint: "Display name for this reel"}

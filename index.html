@@ -505,50 +505,11 @@
         <!-- ║         TAB 2 — REELS                         ║ -->
         <!-- ╚══════════════════════════════════════════════╝ -->
         <div id="tab-reels" class="tab-content">
-            <div class="reels-grid">
-
-                <!-- ──── Reel 1 ──── -->
-                <div class="reel-card">
-                    <div class="reel-video-wrapper">
-                        <iframe src="https://www.youtube.com/embed/3gWAti4pOvg" title="Reel 1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
-                    </div>
-                    <div class="reel-body">
-                        <div class="reel-title">🎬 Reel 1</div>
-                        <div class="reel-meta">
-                            <span class="reel-badge">📹 YouTube Short</span>
-                            <span>UEC Marketing</span>
-                        </div>
-                    </div>
+            <div class="reels-grid" id="dynamic-reels-root">
+                <div style="text-align:center; padding: 3rem; color: #888;">
+                    <div style="font-size: 2rem; margin-bottom: 1rem;">🔄</div>
+                    Loading reels...
                 </div>
-
-                <!-- ──── Reel 2 ──── -->
-                <div class="reel-card">
-                    <div class="reel-video-wrapper">
-                        <iframe src="https://www.youtube.com/embed/zppWIuyidnI" title="Reel 2" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
-                    </div>
-                    <div class="reel-body">
-                        <div class="reel-title">🎬 Reel 2</div>
-                        <div class="reel-meta">
-                            <span class="reel-badge">📹 YouTube Short</span>
-                            <span>UEC Marketing</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ──── Reel 3 ──── -->
-                <div class="reel-card">
-                    <div class="reel-video-wrapper">
-                        <iframe src="https://www.youtube.com/embed/zIk-bMAQEvM" title="Reel 3" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
-                    </div>
-                    <div class="reel-body">
-                        <div class="reel-title">🎬 Reel 3</div>
-                        <div class="reel-meta">
-                            <span class="reel-badge">📹 YouTube Short</span>
-                            <span>UEC Marketing</span>
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </div>
 
@@ -961,8 +922,8 @@
         // Execute Data and Gallery Fetches Immediately
         fetchLiveData();
         fetchGalleryData();
+        fetchReelsData();
 
-        // ── DYNAMIC GALLERY INJECTION (Decap CMS) ──
         // ── DYNAMIC GALLERY INJECTION (Decap/Sveltia CMS) ──
         function fetchGalleryData() {
             try {
@@ -1038,6 +999,50 @@
         }
         
 
+
+        // ── DYNAMIC REELS INJECTION (Sveltia CMS) ──
+        function fetchReelsData() {
+            try {
+                fetch('data/reels.json')
+                    .then(res => {
+                        if (!res.ok) throw new Error('HTTP Status: ' + res.status);
+                        return res.json();
+                    })
+                    .then(data => {
+                        if(data && data.items) {
+                            renderReels(data.items);
+                        } else {
+                            document.getElementById('dynamic-reels-root').innerHTML = "Reels data missing.";
+                        }
+                    })
+                    .catch(err => {
+                        console.error("Error loading reels JSON:", err);
+                        document.getElementById('dynamic-reels-root').innerHTML = "Reels Error: " + err.message;
+                    });
+            } catch (globalErr) {
+                document.getElementById('dynamic-reels-root').innerHTML = "Reels Error: " + globalErr.message;
+            }
+        }
+
+        function renderReels(items) {
+            let html = '';
+            items.forEach(item => {
+                html += `
+                <div class="reel-card">
+                    <div class="reel-video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/${item.youtube_id}" title="${item.title}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+                    </div>
+                    <div class="reel-body">
+                        <div class="reel-title">🎬 ${item.title}</div>
+                        <div class="reel-meta">
+                            <span class="reel-badge">📹 YouTube Short</span>
+                            <span>UEC Marketing</span>
+                        </div>
+                    </div>
+                </div>`;
+            });
+            document.getElementById('dynamic-reels-root').innerHTML = html;
+        }
 
     </script>
 
