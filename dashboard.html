@@ -392,6 +392,63 @@
             color: #667eea;
         }
 
+        /* ══════════════════ REELS TAB ══════════════════ */
+        .reels-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .reel-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .reel-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 60px rgba(102,126,234,0.15);
+        }
+        .reel-video-wrapper {
+            position: relative;
+            width: 100%;
+            background: #000;
+            border-radius: 20px 20px 0 0;
+            overflow: hidden;
+        }
+        .reel-video-wrapper video {
+            width: 100%;
+            display: block;
+            max-height: 500px;
+            object-fit: cover;
+        }
+        .reel-overlay {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+            padding: 1.5rem;
+            pointer-events: none;
+        }
+        .reel-body {
+            padding: 1.2rem 1.5rem;
+        }
+        .reel-title {
+            font-size: 1.1rem; font-weight: 700; color: #fff;
+            margin-bottom: 0.3rem;
+        }
+        .reel-meta {
+            display: flex; align-items: center; gap: 1rem;
+            font-size: 0.8rem; color: #888;
+        }
+        .reel-badge {
+            display: inline-flex; align-items: center; gap: 0.3rem;
+            padding: 0.25rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.7rem; font-weight: 600;
+            background: rgba(102,126,234,0.15);
+            color: #667eea;
+        }
+
         /* ══════════════════ FOOTER ══════════════════ */
         .footer {
             text-align: center; padding: 3rem 0 1rem;
@@ -406,6 +463,7 @@
             body { padding: 1rem; }
             .tab-btn { font-size: 0.8rem; padding: 0.8rem 0.5rem; }
             .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .reels-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -415,12 +473,13 @@
         <!-- ═══════════════ HEADER ═══════════════ -->
         <div class="header">
             <h1>📊 UEC Marketing Team Dashboard</h1>
-            <p>Images, Statistics &amp; Insights</p>
+            <p>Images, Reels, Statistics &amp; Insights</p>
         </div>
 
         <!-- ═══════════════ TAB NAVIGATION ═══════════════ -->
         <div class="tab-nav">
             <button class="tab-btn active" onclick="switchTab('images')">🖼️ Images</button>
+            <button class="tab-btn" onclick="switchTab('reels')">🎬 Reels</button>
             <button class="tab-btn" onclick="switchTab('statistics')">📈 Statistics</button>
             <button class="tab-btn" onclick="switchTab('insights')">💡 Insights</button>
         </div>
@@ -441,7 +500,67 @@
 
 
         <!-- ╔══════════════════════════════════════════════╗ -->
-        <!-- ║         TAB 2 — STATISTICS (Dynamic)          ║ -->
+        <!-- ║         TAB 2 — REELS                         ║ -->
+        <!-- ╚══════════════════════════════════════════════╝ -->
+        <div id="tab-reels" class="tab-content">
+            <div class="reels-grid">
+
+                <!-- ──── Reel 1 ──── -->
+                <div class="reel-card">
+                    <div class="reel-video-wrapper">
+                        <video controls preload="metadata" poster="">
+                            <source src="Videos/Video 1.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="reel-body">
+                        <div class="reel-title">🎬 Reel 1</div>
+                        <div class="reel-meta">
+                            <span class="reel-badge">📹 Video</span>
+                            <span>UEC Marketing</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ──── Reel 2 ──── -->
+                <div class="reel-card">
+                    <div class="reel-video-wrapper">
+                        <video controls preload="metadata" poster="">
+                            <source src="Videos/Video 2.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="reel-body">
+                        <div class="reel-title">🎬 Reel 2</div>
+                        <div class="reel-meta">
+                            <span class="reel-badge">📹 Video</span>
+                            <span>UEC Marketing</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ──── Reel 3 ──── -->
+                <div class="reel-card">
+                    <div class="reel-video-wrapper">
+                        <video controls preload="metadata" poster="">
+                            <source src="Videos/Video 3.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="reel-body">
+                        <div class="reel-title">🎬 Reel 3</div>
+                        <div class="reel-meta">
+                            <span class="reel-badge">📹 Video</span>
+                            <span>UEC Marketing</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ╔══════════════════════════════════════════════╗ -->
+        <!-- ║         TAB 3 — STATISTICS (Dynamic)          ║ -->
         <!-- ╚══════════════════════════════════════════════╝ -->
         <div id="tab-statistics" class="tab-content">
             <div id="dynamic-stats-root">
@@ -502,7 +621,7 @@
             document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
             document.getElementById('tab-' + tabName).classList.add('active');
             const buttons = document.querySelectorAll('.tab-btn');
-            const tabMap = { 'images': 0, 'statistics': 1, 'insights': 2 };
+            const tabMap = { 'images': 0, 'reels': 1, 'statistics': 2, 'insights': 3 };
             buttons[tabMap[tabName]].classList.add('active');
         }
 
