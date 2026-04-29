@@ -104,6 +104,21 @@
       "id": 21,
       "image": "/images/12-1.jpg",
       "title": "2nd batch"
+    },
+    {
+      "id": 22,
+      "image": "/images/14.png",
+      "title": "2nd batch"
+    },
+    {
+      "id": 23,
+      "image": "/images/15.png",
+      "title": "2nd batch"
+    },
+    {
+      "id": 24,
+      "image": "/images/16.png",
+      "title": "2nd batch"
     }
   ]
 }
