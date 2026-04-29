@@ -89,6 +89,21 @@
       "id": 18,
       "image": "/images/18.jpg",
       "title": "UEC Post 18"
+    },
+    {
+      "id": 19,
+      "image": "/images/10-1.png",
+      "title": "2nd batch"
+    },
+    {
+      "id": 20,
+      "image": "/images/11-1.png",
+      "title": "2nd batch"
+    },
+    {
+      "id": 21,
+      "image": "/images/12-1.jpg",
+      "title": "2nd batch"
     }
   ]
 }
