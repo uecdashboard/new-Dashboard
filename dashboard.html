@@ -927,28 +927,56 @@
         fetchGalleryData();
         fetchReelsData();
 
-        // ── DYNAMIC GALLERY INJECTION (Decap/Sveltia CMS) ──
+        // ── AUTO-SCAN GALLERY (reads images/ folder automatically via GitHub API) ──
         function fetchGalleryData() {
-            try {
-                fetch('data/gallery.json')
-                    .then(res => {
-                        if (!res.ok) throw new Error('HTTP Status: ' + res.status);
-                        return res.json();
-                    })
-                    .then(data => {
-                        if(data && data.items) {
-                            renderGallery(data.items);
-                        } else {
-                            document.getElementById('dynamic-gallery-root').innerHTML = "Gallery Data items missing.";
-                        }
-                    })
-                    .catch(err => {
-                        console.error("Error loading gallery JSON:", err);
-                        document.getElementById('dynamic-gallery-root').innerHTML = "Gallery Error (Fetch): " + err.message;
+            const GITHUB_API = 'https://api.github.com/repos/uecdashboard/new-Dashboard/contents/images';
+            const IMAGE_EXTENSIONS = ['.png', '.jpg', '.jpeg', '.gif', '.webp', '.svg'];
+
+            fetch(GITHUB_API)
+                .then(res => {
+                    if (!res.ok) throw new Error('GitHub API: ' + res.status);
+                    return res.json();
+                })
+                .then(files => {
+                    // Filter only image files
+                    const images = files.filter(f => {
+                        const name = f.name.toLowerCase();
+                        return IMAGE_EXTENSIONS.some(ext => name.endsWith(ext));
                     });
-            } catch (globalErr) {
-                document.getElementById('dynamic-gallery-root').innerHTML = "Gallery Error (Logic): " + globalErr.message;
-            }
+
+                    // Sort naturally by filename (1.png, 2.png, 3.png... 10.png, 11.png)
+                    images.sort((a, b) => {
+                        const numA = parseInt(a.name) || 9999;
+                        const numB = parseInt(b.name) || 9999;
+                        if (numA !== numB) return numA - numB;
+                        return a.name.localeCompare(b.name);
+                    });
+
+                    // Build items array automatically
+                    const items = images.map((file, index) => ({
+                        id: index + 1,
+                        image: 'images/' + file.name,
+                        title: 'UEC Post ' + (index + 1)
+                    }));
+
+                    if (items.length > 0) {
+                        renderGallery(items);
+                    } else {
+                        document.getElementById('dynamic-gallery-root').innerHTML = "No images found in the images folder.";
+                    }
+                })
+                .catch(err => {
+                    console.warn("GitHub API failed, trying gallery.json fallback...", err);
+                    // Fallback: try gallery.json if API fails (e.g. rate limit)
+                    fetch('data/gallery.json')
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data && data.items) renderGallery(data.items);
+                        })
+                        .catch(err2 => {
+                            document.getElementById('dynamic-gallery-root').innerHTML = "Gallery Error: " + err.message;
+                        });
+                });
         }
 
         function renderGallery(items) {
