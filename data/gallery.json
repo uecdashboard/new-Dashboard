@@ -32,17 +32,17 @@
     },
     {
       "id": 59,
-      "image": "/images/2-3.png",
+      "image": "/images/1-1.png",
       "title": "Engineering 2"
     },
     {
       "id": 60,
-      "image": "/images/3-3.png",
+      "image": "/images/3-2.png",
       "title": "Engineering 3"
     },
     {
       "id": 61,
-      "image": "/images/4-3.png",
+      "image": "/images/4-1.png",
       "title": "Engineering 4"
     },
     {
@@ -127,7 +127,7 @@
     },
     {
       "id": 78,
-      "image": "/images/4-4.png",
+      "image": "/images/4.png",
       "title": "Dentistry 4"
     },
     {
@@ -167,7 +167,7 @@
     },
     {
       "id": 86,
-      "image": "/images/1-4.png",
+      "image": "/images/1-5.png",
       "title": "Arts and Design 1"
     },
     {
@@ -177,7 +177,7 @@
     },
     {
       "id": 88,
-      "image": "/images/3-4.png",
+      "image": "/images/3-3.png",
       "title": "Arts and Design 3"
     },
     {
@@ -192,7 +192,7 @@
     },
     {
       "id": 91,
-      "image": "/images/computer science 1.jpg",
+      "image": "/images/3.jpg",
       "title": "Computer Science 1"
     },
     {
