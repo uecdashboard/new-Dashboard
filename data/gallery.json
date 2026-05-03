@@ -121,49 +121,9 @@
       "title": "4th batch"
     },
     {
-      "id": 53,
-      "image": "/images/1-1.png",
-      "title": "Pharmacy 1"
-    },
-    {
-      "id": 54,
-      "image": "/images/2.png",
-      "title": "Pharmacy 2"
-    },
-    {
-      "id": 55,
-      "image": "/images/3-1.png",
-      "title": "Pharmacy 3"
-    },
-    {
-      "id": 56,
-      "image": "/images/4.png",
-      "title": "Pharmacy 4"
-    },
-    {
       "id": 57,
       "image": "/images/5.png",
       "title": "Pharmacy 5"
-    },
-    {
-      "id": 58,
-      "image": "/images/1-2.png",
-      "title": "Engineering 1"
-    },
-    {
-      "id": 59,
-      "image": "/images/2-1.png",
-      "title": "Engineering 2"
-    },
-    {
-      "id": 60,
-      "image": "/images/3-2.png",
-      "title": "Engineering 3"
-    },
-    {
-      "id": 61,
-      "image": "/images/4-1.png",
-      "title": "Engineering 4"
     },
     {
       "id": 62,
@@ -231,26 +191,6 @@
       "title": "Business and Economics 5"
     },
     {
-      "id": 75,
-      "image": "/images/1-2.png",
-      "title": "Dentistry 1"
-    },
-    {
-      "id": 76,
-      "image": "/images/2-1.png",
-      "title": "Dentistry 2"
-    },
-    {
-      "id": 77,
-      "image": "/images/3-2.png",
-      "title": "Dentistry 3"
-    },
-    {
-      "id": 78,
-      "image": "/images/4.png",
-      "title": "Dentistry 4"
-    },
-    {
       "id": 79,
       "image": "/images/5-1.png",
       "title": "Dentistry 5"
@@ -291,29 +231,14 @@
       "title": "Arts and Design 1"
     },
     {
-      "id": 87,
-      "image": "/images/2-2.png",
-      "title": "Arts and Design 2"
-    },
-    {
       "id": 88,
       "image": "/images/3-3.png",
       "title": "Arts and Design 3"
     },
     {
-      "id": 89,
-      "image": "/images/4-1.png",
-      "title": "Arts and Design 4"
-    },
-    {
       "id": 90,
       "image": "/images/5-2.png",
       "title": "Arts and Design 5"
-    },
-    {
-      "id": 91,
-      "image": "/images/3.jpg",
-      "title": "Computer Science 1"
     },
     {
       "id": 92,
