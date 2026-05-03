@@ -384,6 +384,16 @@
       "id": 77,
       "image": "/images/3-2.png",
       "title": "Dentistry 3"
+    },
+    {
+      "id": 78,
+      "image": "/images/4.png",
+      "title": "Dentistry 4"
+    },
+    {
+      "id": 79,
+      "image": "/images/5-1.png",
+      "title": "Dentistry 5"
     }
   ]
 }
