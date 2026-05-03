@@ -1,61 +1,6 @@
 {
   "items": [
     {
-      "id": 42,
-      "image": "/images/12.png",
-      "title": "3rd batch"
-    },
-    {
-      "id": 43,
-      "image": "/images/40.png",
-      "title": "4th batch"
-    },
-    {
-      "id": 44,
-      "image": "/images/41.png",
-      "title": "4th batch"
-    },
-    {
-      "id": 45,
-      "image": "/images/42.png",
-      "title": "4th batch"
-    },
-    {
-      "id": 46,
-      "image": "/images/43.png",
-      "title": "4th batch"
-    },
-    {
-      "id": 47,
-      "image": "/images/44.png",
-      "title": "4th batch"
-    },
-    {
-      "id": 48,
-      "image": "/images/45.png",
-      "title": "4th batch"
-    },
-    {
-      "id": 49,
-      "image": "/images/46.png",
-      "title": "4th batch"
-    },
-    {
-      "id": 50,
-      "image": "/images/47.png",
-      "title": "4th batch"
-    },
-    {
-      "id": 51,
-      "image": "/images/48.png",
-      "title": "4th batch"
-    },
-    {
-      "id": 52,
-      "image": "/images/49.png",
-      "title": "4th batch"
-    },
-    {
       "id": 53,
       "image": "/images/1-1.png",
       "title": "Pharmacy 1"
