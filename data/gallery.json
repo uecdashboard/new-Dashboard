@@ -1,66 +1,6 @@
 {
   "items": [
     {
-      "id": 14,
-      "image": "/images/14.jpg",
-      "title": "UEC Post 14"
-    },
-    {
-      "id": 15,
-      "image": "/images/15.jpg",
-      "title": "UEC Post 15"
-    },
-    {
-      "id": 16,
-      "image": "/images/16.jpg",
-      "title": "UEC Post 16"
-    },
-    {
-      "id": 17,
-      "image": "/images/17.jpg",
-      "title": "UEC Post 17"
-    },
-    {
-      "id": 18,
-      "image": "/images/18.jpg",
-      "title": "UEC Post 18"
-    },
-    {
-      "id": 19,
-      "image": "/images/10-1.png",
-      "title": "2nd batch"
-    },
-    {
-      "id": 20,
-      "image": "/images/11-1.png",
-      "title": "2nd batch"
-    },
-    {
-      "id": 21,
-      "image": "/images/12-1.jpg",
-      "title": "2nd batch"
-    },
-    {
-      "id": 22,
-      "image": "/images/14.png",
-      "title": "2nd batch"
-    },
-    {
-      "id": 23,
-      "image": "/images/15.png",
-      "title": "2nd batch"
-    },
-    {
-      "id": 24,
-      "image": "/images/16.png",
-      "title": "2nd batch"
-    },
-    {
-      "id": 25,
-      "image": "/images/17.png",
-      "title": "2nd batch"
-    },
-    {
       "id": 26,
       "image": "/images/18.png",
       "title": "2nd batch"
