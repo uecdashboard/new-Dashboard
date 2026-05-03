@@ -439,6 +439,16 @@
       "id": 88,
       "image": "/images/3-3.png",
       "title": "Arts and Design 3"
+    },
+    {
+      "id": 89,
+      "image": "/images/4-1.png",
+      "title": "Arts and Design 4"
+    },
+    {
+      "id": 90,
+      "image": "/images/5-2.png",
+      "title": "Arts and Design 5"
     }
   ]
 }
