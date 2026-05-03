@@ -449,6 +449,16 @@
       "id": 90,
       "image": "/images/5-2.png",
       "title": "Arts and Design 5"
+    },
+    {
+      "id": 91,
+      "image": "/images/3.jpg",
+      "title": "Computer Science 1"
+    },
+    {
+      "id": 92,
+      "image": "/images/WhatsApp Image 2026-05-02 at 23.08.06.jpeg",
+      "title": "Computer Science 2"
     }
   ]
 }
