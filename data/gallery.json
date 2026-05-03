@@ -263,12 +263,22 @@
     {
       "id": 53,
       "image": "/images/1-1.png",
-      "title": "UEC Post 53"
+      "title": "Pharmacy 1"
     },
     {
       "id": 54,
       "image": "/images/2.png",
-      "title": "UEC Post 54"
+      "title": "Pharmacy 2"
+    },
+    {
+      "id": 55,
+      "image": "/images/3-1.png",
+      "title": "Pharmacy 3"
+    },
+    {
+      "id": 56,
+      "image": "/images/4.png",
+      "title": "Pharmacy 4"
     }
   ]
 }
