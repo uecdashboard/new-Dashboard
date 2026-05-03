@@ -611,6 +611,8 @@
         // ── Render Comments ──
         function renderComments(imageId) {
             const container = document.getElementById('comments-' + imageId);
+            if (!container) return; // Prevent "Cannot set properties of null" error
+            
             const comments = getComments(imageId);
 
             if (comments.length === 0) {
@@ -703,18 +705,22 @@
 
         // ── Load saved state on page load ──
         function loadSavedState() {
-            for (let i = 1; i <= 18; i++) {
+            // Dynamically find all rendered image IDs instead of hardcoded 1 to 18
+            const cards = document.querySelectorAll('.review-card');
+            cards.forEach(card => {
+                const id = card.id.replace('review-card-', '');
+                
                 // Load checkbox state
-                const approved = getApproval(i);
-                const checkbox = document.getElementById('check-' + i);
-                const card = document.getElementById('review-card-' + i);
+                const approved = getApproval(id);
+                const checkbox = document.getElementById('check-' + id);
                 if (checkbox && approved) {
                     checkbox.checked = true;
                     card.classList.add('approved');
                 }
+                
                 // Load comments
-                renderComments(i);
-            }
+                renderComments(id);
+            });
         }
 
         // Run on load
