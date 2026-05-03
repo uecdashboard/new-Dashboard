@@ -304,6 +304,16 @@
       "id": 61,
       "image": "/images/4-1.png",
       "title": "Engineering 4"
+    },
+    {
+      "id": 62,
+      "image": "/images/5.png",
+      "title": "Engineering 5"
+    },
+    {
+      "id": 63,
+      "image": "/images/Untitled design (4).jpg",
+      "title": "Physical Therapy 1"
     }
   ]
 }
