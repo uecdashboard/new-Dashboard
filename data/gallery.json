@@ -1,71 +1,6 @@
 {
   "items": [
     {
-      "id": 29,
-      "image": "/images/21.png",
-      "title": "2nd batch"
-    },
-    {
-      "id": 30,
-      "image": "/images/22.png",
-      "title": "2nd batch"
-    },
-    {
-      "id": 31,
-      "image": "/images/23.png",
-      "title": "2nd batch"
-    },
-    {
-      "id": 32,
-      "image": "/images/karma designs uec.png",
-      "title": "2nd batch"
-    },
-    {
-      "id": 33,
-      "image": "/images/31.png",
-      "title": "3rd batch"
-    },
-    {
-      "id": 34,
-      "image": "/images/32.png",
-      "title": "3rd batch"
-    },
-    {
-      "id": 35,
-      "image": "/images/33.png",
-      "title": "3rd batch"
-    },
-    {
-      "id": 36,
-      "image": "/images/34.png",
-      "title": "3rd batch"
-    },
-    {
-      "id": 37,
-      "image": "/images/35.png",
-      "title": "3rd batch"
-    },
-    {
-      "id": 38,
-      "image": "/images/36.png",
-      "title": "3rd batch"
-    },
-    {
-      "id": 39,
-      "image": "/images/37.png",
-      "title": "3rd batch"
-    },
-    {
-      "id": 40,
-      "image": "/images/38.png",
-      "title": "3rd batch"
-    },
-    {
-      "id": 41,
-      "image": "/images/39.png",
-      "title": "3rd batch"
-    },
-    {
       "id": 42,
       "image": "/images/12.png",
       "title": "3rd batch"
@@ -126,9 +61,19 @@
       "title": "Pharmacy 1"
     },
     {
+      "id": 54,
+      "image": "/images/2.png",
+      "title": "Pharmacy 2"
+    },
+    {
       "id": 55,
       "image": "/images/3-1.png",
       "title": "Pharmacy 3"
+    },
+    {
+      "id": 56,
+      "image": "/images/4.png",
+      "title": "Pharmacy 4"
     },
     {
       "id": 57,
@@ -236,6 +181,11 @@
       "title": "Dentistry 3"
     },
     {
+      "id": 78,
+      "image": "/images/4.png",
+      "title": "Dentistry 4"
+    },
+    {
       "id": 79,
       "image": "/images/5-1.png",
       "title": "Dentistry 5"
@@ -294,6 +244,11 @@
       "id": 90,
       "image": "/images/5-2.png",
       "title": "Arts and Design 5"
+    },
+    {
+      "id": 91,
+      "image": "/images/3.jpg",
+      "title": "Computer Science 1"
     },
     {
       "id": 92,
