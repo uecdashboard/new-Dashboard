@@ -284,6 +284,16 @@
       "id": 57,
       "image": "/images/5.png",
       "title": "Pharmacy 5"
+    },
+    {
+      "id": 58,
+      "image": "/images/1-2.png",
+      "title": "Engineering 1"
+    },
+    {
+      "id": 59,
+      "image": "/images/2-1.png",
+      "title": "Engineering 2"
     }
   ]
 }
