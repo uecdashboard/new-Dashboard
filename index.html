@@ -935,7 +935,7 @@
 
         // ── GOOGLE SHEETS + CMS MERGED GALLERY ──
         // Paste your Google Script URL for Images here:
-        const IMAGES_API_URL = ''; 
+        const IMAGES_API_URL = 'https://script.google.com/macros/s/AKfycby170vLDDK5eb227jodfBkF7jX_LyOsmGiFsYaTI5bNUijskaseve_SJ-DBHRnOoCz69Q/exec'; 
 
         function fetchGalleryData() {
             const GITHUB_API = 'https://api.github.com/repos/uecdashboard/new-Dashboard/contents/images';
@@ -943,7 +943,9 @@
 
             // 1. Fetch Google Sheets Data
             const fetchSheets = IMAGES_API_URL 
-                ? fetch(IMAGES_API_URL).then(r => r.ok ? r.json() : null).catch(() => null)
+                ? fetch(IMAGES_API_URL).then(r => r.text()).then(text => {
+                    try { return JSON.parse(text); } catch(e) { console.error("Sheet Error:", text.substring(0, 50)); return null; }
+                }).catch(() => null)
                 : Promise.resolve(null);
 
             // 2. Fetch CMS Data (gallery.json)
