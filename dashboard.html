@@ -928,13 +928,13 @@
             }
         }
 
+        // ── GOOGLE SHEETS + CMS MERGED GALLERY ──
+        const IMAGES_API_URL = 'https://script.google.com/macros/s/AKfycbwFTnnn8cIOXjHqXyw_AdqL4GjwUWiF7aFduH5VLxPghGD668jpwjbqxx_QZ8pIFSbyXA/exec'; 
+
         // Execute Data and Gallery Fetches Immediately
         fetchLiveData();
         fetchGalleryData();
         fetchReelsData();
-
-        // ── GOOGLE SHEETS + CMS MERGED GALLERY ──
-        const IMAGES_API_URL = 'https://script.google.com/macros/s/AKfycbwFTnnn8cIOXjHqXyw_AdqL4GjwUWiF7aFduH5VLxPghGD668jpwjbqxx_QZ8pIFSbyXA/exec'; 
 
         function getRawImageUrl(url) {
             if (!url) return '';
