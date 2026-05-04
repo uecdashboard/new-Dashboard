@@ -938,6 +938,13 @@
         const IMAGES_API_URL = 'https://script.google.com/macros/s/AKfycbwFTnnn8cIOXjHqXyw_AdqL4GjwUWiF7aFduH5VLxPghGD668jpwjbqxx_QZ8pIFSbyXA/exec'; 
 
         function fetchGalleryData() {
+            setTimeout(() => {
+                const el = document.getElementById('dynamic-gallery-root');
+                if (el && el.innerHTML.includes('Loading image gallery...')) {
+                    el.innerHTML = '<div style="color: white; text-align: center; padding: 2rem;"><h4>Error Loading Gallery</h4><p>The image data took too long to load or the script was interrupted. Try refreshing the page with Ctrl+F5.</p></div>';
+                }
+            }, 5000);
+       
             const GITHUB_API = 'https://api.github.com/repos/uecdashboard/new-Dashboard/contents/images';
             const IMAGE_EXTENSIONS = ['.png', '.jpg', '.jpeg', '.gif', '.webp', '.svg'];
 
@@ -954,91 +961,91 @@
             // 3. Fetch GitHub Folder Data
             const fetchGitHub = fetch(GITHUB_API).then(r => r.ok ? r.json() : null).catch(() => null);
 
-            Promise.all([fetchSheets, fetchCMS, fetchGitHub]).then(([sheetsData, cmsData, folderFiles]) => {
-                
-                let allItems = [];
-                let usedTitles = new Set();
+            .then(([sheetsData, cmsData, folderFiles]) => {
+                try {
+                    let allItems = [];
+                    let usedTitles = new Set();
 
-                // Helper to format Google Drive links to direct image links
-                function formatDriveLink(url) {
-                    if (!url) return '';
-                    if (url.includes('drive.google.com')) {
-                        const idMatch = url.match(/\/d\/([a-zA-Z0-9_-]+)/) || url.match(/id=([a-zA-Z0-9_-]+)/);
-                        if (idMatch) return 'https://lh3.googleusercontent.com/d/' + idMatch[1];
+                    function formatDriveLink(url) {
+                        if (!url) return '';
+                        const strUrl = String(url);
+                        if (strUrl.includes('drive.google.com')) {
+                            const idMatch = strUrl.match(/\/d\/([a-zA-Z0-9_-]+)/) || strUrl.match(/id=([a-zA-Z0-9_-]+)/);
+                            if (idMatch) return 'https://lh3.googleusercontent.com/d/' + idMatch[1];
+                        }
+                        return strUrl;
                     }
-                    return url;
-                }
 
-                // --- 1. GOOGLE SHEETS IMAGES (Top Priority) ---
-                if (sheetsData && sheetsData.items) {
-                    sheetsData.items.forEach((item, index) => {
-                        allItems.push({
-                            id: item.id || (index + 1),
-                            image: formatDriveLink(item.image),
-                            title: item.title || ('Sheet Image ' + (index + 1))
-                        });
-                        usedTitles.add((item.title || '').toLowerCase());
-                    });
-                }
-
-                // --- 2. CMS IMAGES ---
-                const maxSheetsId = allItems.length > 0 ? Math.max(...allItems.map(i => parseInt(i.id) || 0)) : 0;
-                let cmsIdCounter = maxSheetsId + 1;
-                
-                if (cmsData && cmsData.items) {
-                    cmsData.items.forEach(item => {
-                        let img = item.image || '';
-                        if (img.startsWith('/')) img = img.substring(1);
-                        if (!usedTitles.has((item.title || '').toLowerCase())) {
+                    if (sheetsData && sheetsData.items) {
+                        sheetsData.items.forEach((item, index) => {
                             allItems.push({
-                                id: cmsIdCounter++,
-                                image: img,
-                                title: item.title
+                                id: parseInt(item.id) || (index + 1),
+                                image: formatDriveLink(item.image),
+                                title: item.title || ('Sheet Image ' + (index + 1))
                             });
                             usedTitles.add((item.title || '').toLowerCase());
-                        }
-                    });
-                }
+                        });
+                    }
 
-                // --- 3. AUTO-SCAN NEW IMAGES ---
-                const cmsFileNames = new Set(allItems.map(item => {
-                    const parts = item.image.split('/');
-                    return parts[parts.length - 1].toLowerCase();
-                }));
-
-                if (folderFiles && Array.isArray(folderFiles)) {
-                    const images = folderFiles.filter(f => {
-                        const name = f.name.toLowerCase();
-                        return IMAGE_EXTENSIONS.some(ext => name.endsWith(ext));
-                    });
+                    const maxSheetsId = allItems.length > 0 ? Math.max(...allItems.map(i => parseInt(i.id) || 0)) : 0;
+                    let cmsIdCounter = maxSheetsId + 1;
                     
-                    images.sort((a, b) => {
-                        const numA = parseInt(a.name) || 9999;
-                        const numB = parseInt(b.name) || 9999;
-                        if (numA !== numB) return numA - numB;
-                        return a.name.localeCompare(b.name);
-                    });
+                    if (cmsData && cmsData.items) {
+                        cmsData.items.forEach(item => {
+                            let img = String(item.image || '');
+                            if (img.startsWith('/')) img = img.substring(1);
+                            if (!usedTitles.has((item.title || '').toLowerCase())) {
+                                allItems.push({
+                                    id: cmsIdCounter++,
+                                    image: img,
+                                    title: item.title
+                                });
+                                usedTitles.add((item.title || '').toLowerCase());
+                            }
+                        });
+                    }
 
-                    images.forEach(file => {
-                        if (!cmsFileNames.has(file.name.toLowerCase())) {
-                            allItems.push({
-                                id: cmsIdCounter++,
-                                image: 'images/' + file.name,
-                                title: 'UEC Post ' + file.name.replace(/\.[^/.]+$/, '')
-                            });
-                        }
-                    });
+                    const cmsFileNames = new Set(allItems.map(item => {
+                        const parts = String(item.image).split('/');
+                        return parts[parts.length - 1].toLowerCase();
+                    }));
+
+                    if (folderFiles && Array.isArray(folderFiles)) {
+                        const images = folderFiles.filter(f => {
+                            const name = String(f.name).toLowerCase();
+                            return ['.png', '.jpg', '.jpeg', '.gif', '.webp', '.svg'].some(ext => name.endsWith(ext));
+                        });
+                        
+                        images.sort((a, b) => {
+                            const numA = parseInt(a.name) || 9999;
+                            const numB = parseInt(b.name) || 9999;
+                            if (numA !== numB) return numA - numB;
+                            return String(a.name).localeCompare(String(b.name));
+                        });
+
+                        images.forEach(file => {
+                            if (!cmsFileNames.has(String(file.name).toLowerCase())) {
+                                allItems.push({
+                                    id: cmsIdCounter++,
+                                    image: 'images/' + file.name,
+                                    title: 'UEC Post ' + String(file.name).replace(/\.[^/.]+$/, '')
+                                });
+                            }
+                        });
+                    }
+
+                    if (allItems.length > 0) {
+                        renderGallery(allItems);
+                    } else {
+                        document.getElementById('dynamic-gallery-root').innerHTML = "No images found.";
+                    }
+                } catch (internalErr) {
+                    console.error("Internal processing error:", internalErr);
+                    document.getElementById('dynamic-gallery-root').innerHTML = "Processing Error: " + internalErr.message;
                 }
-
-                // Render everything
-                if (allItems.length > 0) {
-                    renderGallery(allItems);
-                } else {
-                    document.getElementById('dynamic-gallery-root').innerHTML = "No images found.";
-                }
-
             }).catch(err => {
-                document.getElementById('dynamic-gallery-root').innerHTML = "Gallery Error: " + err.message;
+                console.error("Fetch Promise error:", err);
+                document.getElementById('dynamic-gallery-root').innerHTML = "Gallery Fetch Error: " + err.message;
             });
         }
 
