@@ -969,8 +969,12 @@
                         });
                     }
 
-                    // Proceed to merge with CMS data
-                    loadCMSFallback(allItems, usedTitles, GITHUB_API, IMAGE_EXTENSIONS);
+                    // Render Google Sheets data directly, do NOT merge with CMS
+                    if (allItems.length > 0) {
+                        renderGallery(allItems);
+                    } else {
+                        document.getElementById('dynamic-gallery-root').innerHTML = "No images found in Google Sheet.";
+                    }
                 })
                 .catch(err => {
                     console.error("Google Sheets fetch failed, falling back to CMS only:", err);
