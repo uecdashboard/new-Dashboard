@@ -572,6 +572,9 @@
 
     <!-- ═══════════════ JAVASCRIPT ═══════════════ -->
     <script>
+        // ── GLOBALS ──
+        const IMAGES_API_URL = "https://script.google.com/macros/s/AKfycbwFTnnn8cIOXjHqXyw_AdqL4GjwUWiF7aFduH5VLxPghGD668jpwjbqxx_QZ8pIFSbyXA/exec";
+
         // ── Tab Switching ──
         function switchTab(tabName) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
@@ -927,9 +930,6 @@
                 insightsRoot.innerHTML = insightsHtml;
             }
         }
-
-        // ── GOOGLE SHEETS + CMS MERGED GALLERY ──
-        const IMAGES_API_URL = 'https://script.google.com/macros/s/AKfycbwFTnnn8cIOXjHqXyw_AdqL4GjwUWiF7aFduH5VLxPghGD668jpwjbqxx_QZ8pIFSbyXA/exec'; 
 
         // Execute Data and Gallery Fetches Immediately
         fetchLiveData();
