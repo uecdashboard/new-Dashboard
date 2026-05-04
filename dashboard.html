@@ -934,40 +934,17 @@
         fetchReelsData();
 
         // ── GOOGLE SHEETS + CMS MERGED GALLERY ──
-        const SHEET_ID = '18XSwbl7-OCWcl68PKVI1M6a1JhBUVaGlU7cEvIJNuk8';
-        const GVIZ_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&headers=1`;
+        // Paste your Google Script URL for Images here:
+        const IMAGES_API_URL = ''; 
 
         function fetchGalleryData() {
             const GITHUB_API = 'https://api.github.com/repos/uecdashboard/new-Dashboard/contents/images';
             const IMAGE_EXTENSIONS = ['.png', '.jpg', '.jpeg', '.gif', '.webp', '.svg'];
 
-            // 1. Fetch Google Sheets Data (No Apps Script needed!)
-            const fetchSheets = fetch(GVIZ_URL)
-                .then(r => r.text())
-                .then(text => {
-                    const jsonString = text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1);
-                    const data = JSON.parse(jsonString);
-                    let sheetsData = { items: [] };
-                    
-                    if (data.table && data.table.rows && data.table.cols) {
-                        const headers = data.table.cols.map(c => c ? (c.label || '').toLowerCase().trim() : '');
-                        data.table.rows.forEach(row => {
-                            let item = {};
-                            if (row.c) {
-                                row.c.forEach((cell, i) => {
-                                    if (headers[i]) {
-                                        item[headers[i]] = cell ? (cell.v || '') : '';
-                                    }
-                                });
-                            }
-                            if (item.image) sheetsData.items.push(item);
-                        });
-                    }
-                    return sheetsData;
-                }).catch(err => {
-                    console.error("Google Sheets Error:", err);
-                    return null;
-                });
+            // 1. Fetch Google Sheets Data
+            const fetchSheets = IMAGES_API_URL 
+                ? fetch(IMAGES_API_URL).then(r => r.ok ? r.json() : null).catch(() => null)
+                : Promise.resolve(null);
 
             // 2. Fetch CMS Data (gallery.json)
             const fetchCMS = fetch('data/gallery.json').then(r => r.ok ? r.json() : null).catch(() => null);
